@@ -1,0 +1,127 @@
+body {
+  box-sizing: border-box;
+  background-color: rgb(192, 192, 192);
+  width: 100vw;
+}
+
+/* 主题内容 */
+main {
+  box-sizing: border-box;
+  width: 70vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 搜索相关 */
+.search {
+  box-sizing: border-box;
+  width: 40vw;
+  height: 8vh;
+  line-height: 8vh;
+  margin: 10vh auto 0;
+  background-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  position: relative;
+}
+
+/* 搜索图标 */
+.bi-search {
+  width: auto;
+  height: 60%;
+  margin: 0 2vh;
+  cursor: pointer;
+}
+
+.search-input {
+  width: 75%;
+  height: 100%;
+  border: none;
+  font-size: 3vh;
+}
+
+.search-input:focus {
+  /* 去除聚焦时默认边框 */
+  outline: none;
+}
+
+.search-button {
+  position: absolute;
+  right: 3vh;
+  width: auto;
+  height: 4vh;
+  display: inline-block;
+  font-size: 3vh;
+  text-align: center;
+}
+
+.search-button:hover {
+  cursor: pointer;
+  color: rgb(13, 110, 253);
+}
+
+/* 相关搜索栏 */
+.relevant-search {
+  box-sizing: border-box;
+  width: 40vw;
+  margin: 1vh auto 10vh;
+  border-radius: 2px;
+}
+
+.relevant-item {
+  margin-left: 0.5vw;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.relevant-item:hover {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+/* 内容展示区 */
+.content {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 侧边栏 */
+aside {
+  box-sizing: border-box;
+  width: 30%;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-search-title {
+  font-size: 5vh;
+  margin: 3vh 0;
+}
+
+.list-group {
+  border-bottom: 1px solid rgb(217, 218, 219);
+  margin-bottom: 3vh;
+}
+
+/* 答案展示区 */
+.show-answer {
+  box-sizing: border-box;
+  width: 60%;
+  height: 60vh;
+  padding: 2vh;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.answer-title {
+  font-size: 4vh;
+  margin: 2vh 0;
+  border-bottom: 1px solid rgb(217, 218, 219);
+}
