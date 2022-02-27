@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>浏览模式切换实现方案三</title>
+    <style>
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        box-sizing: border-box;
+      }
+
+      .content {
+        height: 100%;
+        padding: 10px;
+        transition: background-color 1s;
+      }
+
+      #modeCheckBox {
+        display: none;
+      }
+
+      #modeCheckBox:checked + .content {
+        background-color: black;
+        color: white;
+      }
+
+      #modeBtn {
+        font-size: 2rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: inherit;
+      }
+
+      #modeBtn::after {
+        content: "🌞";
+      }
+
+      body.night #modeBtn::after {
+        content: "🌜";
+      }
+    </style>
+  </head>
+  <body>
+    <input id="modeCheckBox" type="checkbox" />
+    <div class="content">
+      <!-- 操作 label 本质上为操作 input -->
+      <label id="modeBtn" for="modeCheckBox"></label>
+      <h1>huaqi</h1>
+    </div>
+  </body>
+</html>

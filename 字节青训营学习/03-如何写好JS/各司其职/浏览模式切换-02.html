@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>浏览模式切换实现方案二</title>
+    <style>
+      #modeBtn {
+        font-size: 2rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: inherit;
+      }
+
+      body.night {
+        background-color: black;
+        color: white;
+        transition: all 1s;
+      }
+
+      #modeBtn::after {
+        content: "🌞";
+      }
+
+      body.night #modeBtn::after {
+        content: "🌜";
+      }
+    </style>
+  </head>
+  <body>
+    <button id="modeBtn"></button>
+    <h1>huaqi</h1>
+
+    <script>
+      const btn = document.getElementById("modeBtn");
+      btn.addEventListener("click", e => {
+        const body = document.body;
+        if (body.className !== "night") {
+          body.className = "night";
+        } else {
+          body.className = "";
+        }
+      });
+    </script>
+  </body>
+</html>

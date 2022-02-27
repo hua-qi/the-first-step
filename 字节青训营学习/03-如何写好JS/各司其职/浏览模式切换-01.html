@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>浏览模式切换实现方案一</title>
+  </head>
+  <body>
+    <button id="modeBtn">🌞</button>
+    <h1>huaqi</h1>
+
+    <script>
+      const btn = document.getElementById("modeBtn");
+      btn.addEventListener("click", e => {
+        const body = document.body;
+        if (e.target.innerHTML === "🌞") {
+          body.style.backgroundColor = "black";
+          body.style.color = "white";
+          e.target.innerHTML = "🌜";
+        } else {
+          body.style.backgroundColor = "white";
+          body.style.color = "black";
+          e.target.innerHTML = "🌞";
+        }
+      });
+    </script>
+  </body>
+</html>
