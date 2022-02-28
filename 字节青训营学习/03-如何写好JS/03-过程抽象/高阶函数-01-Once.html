@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数 -- Once</title>
+    <style>
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      li button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        outline: 0 none;
+      }
+
+      li.completed {
+        transition: opacity 2s;
+        opacity: 0;
+      }
+
+      li button::before {
+        content: "☑";
+      }
+
+      li.completed button::before {
+        content: "✅";
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li><button></button><span>任务一：学习HTML</span></li>
+      <li><button></button><span>任务二：学习CSS</span></li>
+      <li><button></button><span>任务三：学习JavaScript</span></li>
+    </ul>
+
+    <script>
+      /* 
+        fn 在执行一次后，赋值为 null
+        根据闭包特性
+        fn 保存在内存 堆 中
+        JavaSctipt 保存堆中的数据并不会因为声明它的函数执行完毕而销毁，会一直存在
+        fn 并不会因为触发 click ，而重新创建
+         */
+      function once(fn) {
+        function execute(...args) {
+          if (fn) {
+            const ret = fn.apply(this, args);
+            fn = null;
+            return ret;
+          }
+        }
+        // console.log(execute);
+        return execute;
+      }
+
+      const list = document.querySelector("ul");
+      const buttons = list.querySelectorAll("button");
+      buttons.forEach(button => {
+        /*
+          用户触发点击事件时，li 元素会在 2000ms 之后被移除
+          若用户在 2000ms 内多次触发点击事件
+          之后由于 li 元素已经被移除，会有报错：
+          Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+
+          当然可以在函数体内进行次数限制，
+          但是因为 次数限制是一个通用功能，故而进行过程抽象
+          故而 使用 高阶函数 once 进行操作次数限制
+           */
+        button.addEventListener(
+          "click",
+          once(evt => {
+            const target = evt.target;
+            target.parentNode.className = "completed";
+
+            setTimeout(() => {
+              list.removeChild(target.parentNode);
+            }, 2000);
+          })
+        );
+      });
+
+      // 一个简单的 闭包示例
+      function makeFunc() {
+        var name = "Mozilla";
+        function displayName() {
+          alert(name);
+        }
+        return displayName;
+      }
+
+      var myFunc = makeFunc();
+      //   console.log(myFunc);
+      //   myFunc();
+    </script>
+  </body>
+</html>

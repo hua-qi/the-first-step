@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数 -- Iterative</title>
+  </head>
+  <body>
+    <ul>
+      <li>a</li>
+      <li>b</li>
+      <li>c</li>
+      <li>d</li>
+      <li>e</li>
+      <li>f</li>
+      <li>g</li>
+      <li>h</li>
+      <li>i</li>
+    </ul>
+
+    <script>
+      /* 
+      判断是否可以迭代
+      Symbol.iterator 为每一个对象定义了默认的迭代器。
+      该迭代器可被 for...of 循环使用。
+
+      而迭代 DOM 集合，比如 NodeList 对象，
+      注：只能在实现了 NodeList.prototype[Symbol.iterator] 的平台上，迭代 NodeList
+       */
+      const isIterable = obj =>
+        obj != null && typeof obj[Symbol.iterator] === "function";
+
+      const iterative = fn => {
+        return (subject, ...rest) => {
+          if (isIterable(subject)) {
+            const ret = [];
+            for (let obj of subject) {
+              console.log(fn.apply(this, [obj, ...rest]));
+              ret.push(fn.apply(this, [obj, ...rest]));
+            }
+            return ret;
+          }
+
+          return fn.apply(this, [subject, ...rest]);
+        };
+      };
+
+      const setColor = iterative((el, color) => {
+        el.style.color = color;
+      });
+
+      const els = document.querySelectorAll("li:nth-child(2n+1)");
+      setColor(els, "red");
+    </script>
+  </body>
+</html>

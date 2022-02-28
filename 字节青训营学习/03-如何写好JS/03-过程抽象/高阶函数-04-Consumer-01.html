@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数 -- Consumer - 01</title>
+  </head>
+  <body></body>
+
+  <script>
+    const consumer = (fn, time = 500) => {
+      // 声明队列 与 timer
+      let tasks = [],
+        timer;
+
+      return (...args) => {
+        // 填充队列
+        tasks.push(fn.bind(this, ...args));
+        // 在这里打印队列元素
+        console.log(tasks);
+
+        if (timer == null) {
+          timer = setInterval(() => {
+            // 队列先进先出
+            tasks.shift().call(this);
+
+            // 队列为空
+            if (tasks.length <= 0) {
+              clearInterval(timer);
+              timer = null;
+            }
+          }, time);
+        }
+      };
+    };
+
+    // x 与 ref 相加 并打印结果
+    const add = (ref, x) => {
+      const v = ref.value + x;
+      console.log(`${ref.value} + ${x} = ${v}`);
+      ref.value = v;
+      return ref;
+    };
+
+    const consumerAdd = consumer(add, 1000);
+    // console.log(consumerAdd);
+
+    const ref = { value: 0 };
+
+    for (let i = 0; i < 10; i++) {
+      consumerAdd(ref, i);
+    }
+  </script>
+</html>

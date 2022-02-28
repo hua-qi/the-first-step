@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数 -- Throttle（节流）</title>
+    <style>
+      #circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        line-height: 50px;
+        text-align: center;
+        background-color: red;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.25s;
+      }
+
+      #circle.fade {
+        opacity: 0;
+        transition: opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <span>每500ms记录一次</span>
+    <button id="btn">点击</button>
+    <div id="circle">0</div>
+
+    <script>
+      /*
+        节流实现
+        使用 setTimeout 定时清除计时器，达到节流效果
+         */
+      function throttle(fn, time = 500) {
+        let timer;
+        return function (...args) {
+          if (timer == null) {
+            fn.apply(this, args);
+            timer = setTimeout(() => {
+              timer = null;
+            }, time);
+          }
+        };
+      }
+
+      btn.onclick = throttle(e => {
+        circle.innerHTML = parseInt(circle.innerHTML) + 1;
+        circle.className = "fade";
+        setTimeout(() => (circle.className = ""), 250);
+      }, 1000);
+    </script>
+  </body>
+</html>

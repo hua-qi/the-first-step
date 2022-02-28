@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数 -- Dedounce（防抖）</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .sprite {
+        display: inline-block;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-image: url(https://p1.ssl.qhimg.com/d/inn/0f86ff2a/8PQEganHkhynPxk-CUyDcJEk.png);
+      }
+
+      .bird0,
+      .bird1,
+      .bird2 {
+        width: 86px;
+        height: 60px;
+      }
+      .bird0 {
+        background-position: -178px -2px;
+      }
+      .bird1 {
+        background-position: -90px -2px;
+      }
+      .bird2 {
+        background-position: -2px -2px;
+      }
+
+      #bird {
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        transform: scale(0.5);
+        transform-origin: -50% -50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bird" class="sprite bird1"></div>
+    <script src="https://s1.qhres2.com/!bd39e7fb/animator-0.2.0.min.js"></script>
+
+    <script>
+      // 小鸟飞起来
+      let i = 0;
+      setInterval(function () {
+        bird.className = "sprite " + "bird" + (i++ % 3);
+      }, 1000 / 10);
+
+      // 防抖
+      const debounce = (fn, dur) => {
+        dur = dur || 100;
+        let timer;
+        return (...args) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, dur);
+        };
+      };
+
+      document.addEventListener(
+        "mousemove",
+        debounce(evt => {
+          let x = evt.clientX,
+            y = evt.clientY,
+            x0 = bird.offsetLeft,
+            y0 = bird.offsetTop;
+
+          // 注意是否防抖的打印
+          console.log(x, y);
+
+          let al = new Animator(
+            1000,
+            ep => {
+              bird.style.top = y0 + ep * (y - y0) + "px";
+              bird.style.left = x0 + ep * (x - x0) + "px";
+            },
+            p => p * p
+          );
+
+          al.animate();
+        }, 100)
+      );
+    </script>
+  </body>
+</html>
