@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通灯 版本二</title>
+    <style>
+      #traffic {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #traffic li {
+        list-style: none;
+        width: 50px;
+        height: 50px;
+        background-color: gray;
+        margin: 5px;
+        border-radius: 50%;
+      }
+
+      #traffic.wait li:nth-child(1) {
+        background-color: yellow;
+      }
+
+      #traffic.stop li:nth-child(2) {
+        background-color: red;
+      }
+
+      #traffic.pass li:nth-child(3) {
+        background-color: green;
+      }
+
+      #traffic.s4 li:nth-child(4) {
+        background-color: #a0a;
+      }
+
+      #traffic.s5 li:nth-child(5) {
+        background-color: #0aa;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="traffic" class="wait">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <script>
+      const traffic = document.getElementById("traffic");
+
+      // 数据抽象
+      const stateList = [
+        {
+          state: "wait",
+          last: 1000,
+        },
+        {
+          state: "stop",
+          last: 3000,
+        },
+        {
+          state: "pass",
+          last: 3000,
+        },
+      ];
+
+      const start = (traffic, stateList) => {
+        const applyState = stateIdx => {
+          const { state, last } = stateList[stateIdx];
+          traffic.className = state;
+
+          // 当前项计时完毕，执行下一项
+          setTimeout(() => {
+            applyState((stateIdx + 1) % stateList.length);
+          }, last);
+        };
+
+        applyState(0);
+      };
+
+      start(traffic, stateList);
+    </script>
+  </body>
+</html>

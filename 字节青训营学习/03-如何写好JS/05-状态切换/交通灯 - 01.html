@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通灯 版本一</title>
+    <style>
+      #traffic {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #traffic li {
+        list-style: none;
+        width: 50px;
+        height: 50px;
+        background-color: gray;
+        margin: 5px;
+        border-radius: 50%;
+      }
+
+      #traffic.s1 li:nth-child(1) {
+        background-color: #a00;
+      }
+
+      #traffic.s2 li:nth-child(2) {
+        background-color: #aa0;
+      }
+
+      #traffic.s3 li:nth-child(3) {
+        background-color: #0a0;
+      }
+
+      #traffic.s4 li:nth-child(4) {
+        background-color: #a0a;
+      }
+
+      #traffic.s5 li:nth-child(5) {
+        background-color: #0aa;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="traffic" class="wait">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <script>
+      const traffic = document.getElementById("traffic");
+
+      // IIFE 自执行匿名函数
+      (function reset() {
+        traffic.className = "s1";
+
+        // callback hell
+        setTimeout(function () {
+          traffic.className = "s2";
+          setTimeout(function () {
+            traffic.className = "s3";
+            setTimeout(function () {
+              traffic.className = "s4";
+              setTimeout(function () {
+                traffic.className = "s5";
+                setTimeout(reset, 1000);
+              }, 1000);
+            }, 1000);
+          }, 1000);
+        }, 1000);
+      })();
+    </script>
+  </body>
+</html>

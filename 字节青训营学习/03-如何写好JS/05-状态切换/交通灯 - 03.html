@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通灯 版本三</title>
+    <style>
+      #traffic {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #traffic li {
+        list-style: none;
+        width: 50px;
+        height: 50px;
+        background-color: gray;
+        margin: 5px;
+        border-radius: 50%;
+      }
+
+      #traffic.wait li:nth-child(1) {
+        background-color: yellow;
+      }
+
+      #traffic.stop li:nth-child(2) {
+        background-color: red;
+      }
+
+      #traffic.pass li:nth-child(3) {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="traffic" class="wait">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <script>
+      // 过程抽象
+      const poll = (...fnList) => {
+        let stateIndex = 0;
+
+        return async (...args) => {
+          // 获取下一项 函数
+          let fn = fnList[stateIndex++ % fnList.length];
+          return await fn.apply(this, args);
+        };
+      };
+
+      const wait = ms => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      };
+
+      const setState = async (state, ms) => {
+        const traffic = document.getElementById("traffic");
+        traffic.className = state;
+        await wait(ms);
+      };
+
+      // 构造事件循环函数
+      let trafficStatePoll = poll(
+        // 更改状态函数绑定参数
+        setState.bind(null, "wait", 1000),
+        setState.bind(null, "stop", 3000),
+        setState.bind(null, "pass", 3000)
+      );
+
+      // 自执行匿名函数 IIFE
+      (async () => {
+        while (1) {
+          await trafficStatePoll();
+        }
+      })();
+    </script>
+  </body>
+</html>

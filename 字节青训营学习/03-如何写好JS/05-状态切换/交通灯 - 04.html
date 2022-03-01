@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>交通灯 版本四</title>
+    <style>
+      #traffic {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #traffic li {
+        list-style: none;
+        width: 50px;
+        height: 50px;
+        background-color: gray;
+        margin: 5px;
+        border-radius: 50%;
+      }
+
+      #traffic.wait li:nth-child(1) {
+        background-color: yellow;
+      }
+
+      #traffic.stop li:nth-child(2) {
+        background-color: red;
+      }
+
+      #traffic.pass li:nth-child(3) {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="traffic" class="wait">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <script>
+      const wait = time => {
+        return new Promise(resolve => setTimeout(resolve, time));
+      };
+
+      const setState = async (state, ms) => {
+        const traffic = document.getElementById("traffic");
+        traffic.className = state;
+      };
+
+      const start = async () => {
+        // 倒计时 与 样式变化 逻辑分离
+        while (1) {
+          setState("wait");
+          await wait(1000);
+          setState("stop");
+          await wait(3000);
+          setState("pass");
+          await wait(3000);
+        }
+      };
+    </script>
+  </body>
+</html>
