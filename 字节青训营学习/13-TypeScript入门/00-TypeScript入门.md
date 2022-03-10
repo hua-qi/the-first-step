@@ -606,7 +606,9 @@ interface IArr<T> = Array<T | IArr<T>>;
 
 function timesMapAdd<T>(numberArr: IArr<T>): void {
   numberArr.forEach(item => {
-    if (typeof item === array) {
+    // 判断当前项是否为数组
+    // Array.isArray() 方法
+    if (Array.isArray(item)) {
       timesMapAdd(item);
     }
     const timesRes = timesMap[item];
