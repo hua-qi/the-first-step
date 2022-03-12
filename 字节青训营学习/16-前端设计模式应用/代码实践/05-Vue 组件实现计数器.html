@@ -1,0 +1,19 @@
+<template>
+  <button @click="count">count is: {{count}}</button>
+</template>
+
+<script setup lang="ts">
+  import { ref, onBeforeUpdate, obUpdated } from "vue";
+
+  const count = ref(0);
+
+  // 代理模式体现
+  // DOM 更新前后的钩子
+  onBeforeUpdate(() => {
+    console.log("Dom before update", dom.value?.innerText);
+  });
+
+  onUpdated(() => {
+    console.log("Dom after update", dom.value?.innerText);
+  });
+</script>
