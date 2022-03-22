@@ -95,3 +95,10 @@ myLinkedList.append(1);
 myLinkedList.append(1);
 console.log(myLinkedList.toString());
 console.log(myLinkedList);
+
+let i = 0;
+while (i++ < 5) {
+  console.log(i);
+}
+console.log("========");
+console.log(i);
