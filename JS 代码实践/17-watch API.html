@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watch API</title>
+  </head>
+  <body>
+    <!-- 数据改变时，自动进行渲染工作 -->
+    <span id="container">1</span>
+    <button id="button">点击 +1</button>
+    <button id="button-define">点击 +1 (defineProperty)</button>
+    <button id="button-watch">点击 +1 (watch)</button>
+    <button id="button-watchV2">点击 +1 (watchV2)</button>
+
+    <script>
+      // 1. 传统做法
+      document.getElementById("button").addEventListener("click", function () {
+        let container = document.getElementById("container");
+
+        container.innerHTML = Number(container.innerHTML) + 1;
+      });
+
+      // ====================================
+
+      // 2. 使用 defineProperty
+      let obj = {
+        value: 1,
+      };
+
+      // 储存 obj.value 的值（此时 obj.value 仍是数据属性）
+      let value = obj.value;
+
+      // 从此刻开始 obj.value 变为 存取属性（原先的vlaue: 1 无意义）
+      Object.defineProperty(obj, "value", {
+        get: function () {
+          return value;
+        },
+        set: function (newValue) {
+          value = newValue;
+          document.getElementById("container").innerHTML = newValue;
+        },
+      });
+
+      document.getElementById("button-define"),
+        addEventListener("click", function () {
+          obj.value = obj.value + 1;
+        });
+
+      // 代码看似增多了，但是当我们需要改变 span 元素的值时，直接修改 obj.value 的值就好。可以通过多种方式 修改 obj.value 进而达到数据驱动视图的目的
+
+      /*
+      不足之处：我们需要单独声明一个变量 存储 obj.value 的值，引入如果在 set 中直接 obj.value = newValue (这样会触发新的 obj.value 的 set)会陷入无限的循环当中
+
+      此外，如果需要监控很多属性值的改变，那么需要为它们逐一声明监控方法，很繁琐
+
+      解决办法：watch 函数
+
+      ===============================================
+       */
+
+      // watch 函数
+      // 将 watch 函数封装在 IIFE 之后，在编译阶段 JavaScript 引擎就不会为 watch 创建函数对象，这样 watch 就不会被外部代码访问到（仅对于编译阶段；watch 是绑定到全局上下文的）
+      (function () {
+        let root = this;
+        function watch(obj, name, func) {
+          let value = obj[name];
+
+          Object.defineProperty(obj, name, {
+            get: function () {
+              return value;
+            },
+            set: function (newValue) {
+              value = newValue;
+              func(value);
+            },
+          });
+
+          // 注册 watch 就调用一次 setter 的目的是什么
+          // 目的：obj 中的 value 有初始值的情况下能立即在页面上展示
+          if (value) obj[name] = value;
+        }
+
+        // 将 watch 添加到全局对象中
+        this.watch = watch;
+      })();
+
+      let objV2 = {
+        age: 1,
+      };
+
+      watch(obj, "age", function (newValue) {
+        document.getElementById("container").innerHTML = newValue;
+      });
+
+      document
+        .getElementById("button-watch")
+        .addEventListener("click", function () {
+          objV2.age += 1;
+        });
+
+      /*
+        ==============================
+
+        watch 函数优化
+        使用 Proxy 进行优化
+
+        使用 defineProperty 和 proxy 的区别
+        - 使用 defineProperty，只修改原来的 obj 对象就可以触发拦截
+
+        - 使用 proxy，必须修改代理对象，即 Proxy 的实例才可以触发拦截
+         */
+
+      (function () {
+        let root = this;
+
+        function watchV2(target, func) {
+          let proxy = new Proxy(target, {
+            get: function (target, prop) {
+              return target[prop];
+            },
+            set: function (target, prop, value) {
+              target[prop] = value;
+              func(prop, value);
+            },
+          });
+
+          return proxy;
+        }
+
+        this.watchV2 = watchV2;
+      })();
+
+      let objV3 = {
+        time: 1,
+      };
+
+      let newObj = watchV2(objV3, function (key, newValue) {
+        if (key === "time") {
+          document.getElementById("container").innerHTML = newValue;
+        }
+      });
+
+      document
+        .getElementById("button-watchV2")
+        .addEventListener("click", function () {
+          newObj.time += 1;
+        });
+    </script>
+  </body>
+</html>
