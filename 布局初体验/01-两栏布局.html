@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>两栏布局</title>
+    <style>
+      /* 1. 左侧元素宽度固定，设置向左浮动。右侧元素的 margin-left 设为固定宽度，且右边元素的 width 采取默认值 auto */
+
+      /* .outer {
+        height: 100px;
+      }
+
+      .left {
+        float: left;
+        width: 200px;
+        height: 100%;
+        background-color: lightcoral;
+      }
+
+      .right {
+        margin-left: 200px;
+        height: 100%;
+        background: lightseagreen;
+      } */
+
+      /* ============================================ */
+
+      /* 2. 右侧元素设置 overflow: hidden；使其触发 BFC。BFC 的区域不会与浮动元素发生重叠 */
+
+      /* .right {
+        overflow: hidden;
+        height: 100%;
+        background: lightseagreen;
+      } */
+
+      /* ============================================ */
+
+      /* 3. 利用 flex 布局，左侧元素固定宽度，右侧元素设置 flex：1； */
+
+      /* .outer {
+        display: flex;
+        height: 100px;
+      }
+
+      .left {
+        width: 200px;
+        height: 100%;
+        background: lightcoral;
+      }
+
+      .right {
+        flex: 1;
+        height: 100%;
+        background: lightseagreen;
+      } */
+
+      /* ============================================ */
+
+      /* 4. 利用绝对定位，父级元素设为相对定位，左侧元素 absolute 定位，宽度固定。右侧 margin-left 属性值设置为左侧元素的宽度值 */
+
+      /* .outer {
+        position: relative;
+        height: 100px;
+      }
+
+      .left {
+        position: absolute;
+        width: 200px;
+        height: 100%;
+        background-color: lightcoral;
+      }
+
+      .right {
+        margin-left: 200px;
+        height: 100%;
+        background-color: lightseagreen;
+      } */
+
+      /* ==================================== */
+
+      /* 5. 利用绝对定位，父级元素设置为相对定位，左侧元素宽度固定，左侧元素 absolute 定位，left 属性值为左侧元素宽度值 */
+
+      .outer {
+        position: relative;
+        height: 100px;
+      }
+
+      .left {
+        width: 200px;
+        height: 100%;
+        background-color: lightcoral;
+      }
+
+      .right {
+        position: absolute;
+        left: 200px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        background: lightseagreen;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 左侧固定 + 右侧自适应布局 -->
+    <div class="outer">
+      <div class="left">左侧</div>
+      <div class="right">右侧</div>
+    </div>
+  </body>
+</html>
