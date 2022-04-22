@@ -78,3 +78,8 @@ function objectFactoryV2() {
   // 如果是原始值类型，则返回新对象
   return typeof ret === "object" ? ret : obj;
 }
+
+function memoize(fn) {}
+let fibonacci = memoize(function (n) {
+  return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+});
