@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水平垂直居中的多种实现方式</title>
+    <style>
+      /* 基础样式 */
+      .father {
+        width: 500px;
+        height: 500px;
+        margin: 100px auto;
+        background-color: aqua;
+      }
+
+      .son {
+        background-color: tomato;
+      }
+
+      /*
+       1. 定位 + translate 
+       该方法对子元素宽高 没有要求
+      */
+
+      /* .father {
+        position: relative;
+      }
+
+      .son {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      } */
+
+      /* =================================== */
+
+      /*
+       2. 定位 + margin: auto
+       需要子元素具有宽高
+       margin: auto; 根据父元素的宽高实现平分
+       */
+
+      /* .father {
+        position: relative;
+      }
+
+      .son {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 10%;
+        height: 10%;
+      } */
+
+      /* ========================================== */
+
+      /* 
+      3. 定位 + margin 负值
+      须定宽高
+       */
+
+      /* .father {
+        position: relative;
+      }
+
+      .son {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        margin-left: -50px;
+        margin-top: -50px;
+      } */
+
+      /* ================================== */
+
+      /* 
+      4. 最最最最喜欢的 flex 布局
+      不定宽高
+       */
+      .father {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="father">
+      <div class="son">huaqi</div>
+    </div>
+  </body>
+</html>
