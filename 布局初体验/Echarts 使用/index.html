@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学生评价</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        list-style: none;
+      }
+
+      body {
+        display: flex;
+      }
+
+      .side_bar {
+        width: 200px;
+        height: 100vh;
+        background-color: #393d49;
+      }
+
+      .side_bar li {
+        box-sizing: border-box;
+        width: 100%;
+        height: 40px;
+        padding: 0 20px;
+        line-height: 40px;
+        color: #fff;
+      }
+
+      .side_bar li:first-child {
+        border-right: 1px solid white;
+        background-color: #009788;
+      }
+
+      .content {
+        flex: 1;
+      }
+
+      .head {
+        width: 100%;
+        height: 10vh;
+        background-color: #393d49;
+        display: flex;
+      }
+
+      .head li {
+        height: 10vh;
+        line-height: 10vh;
+        padding: 0 10px;
+        color: #fff;
+      }
+
+      .head li:first-child {
+        background-color: #009788;
+      }
+      .main {
+        width: 100%;
+        height: 90vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #eff0f0;
+      }
+
+      .main .item {
+        width: 40%;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 2px #bdcee0;
+      }
+
+      .item .chart {
+        width: 100%;
+        height: 50vh;
+      }
+
+      .item .valuation {
+        margin: 0 auto 10px;
+        width: 80%;
+        text-indent: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="side_bar">
+      <li>个人中心</li>
+      <li>选课模块</li>
+      <li>获奖信息</li>
+      <li>工作信息</li>
+      <li>智能问答</li>
+      <li>关系查询</li>
+    </ul>
+    <div class="content">
+      <ul class="head">
+        <li>学生整体学习情况</li>
+        <li>学生校园生活情况</li>
+        <li>学生消费情况</li>
+      </ul>
+      <div class="main">
+        <div class="item">
+          <div class="chart" id="pie_chart"></div>
+          <p class="valuation">
+            有较强的自学能力和自我管理能力，在专业学习上主观性强，已经自学了多门非专业课程，进步显著。
+          </p>
+          <p class="valuation">
+            与同学相处融洽，适应能力强。能够充分利用现有条件，发挥自己的才能，健康成长。
+          </p>
+        </div>
+        <div class="item">
+          <div class="chart" id="radar_chart"></div>
+          <p class="valuation">
+            品行端正，学习努力，与同学相处融洽，积极与老师交流。自制力强，能够适当的利用起自己的课余时间，看自己感兴趣的书，发展自己多方面的爱好和特长。
+          </p>
+        </div>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"
+    ></script>
+    <script type="module" src="./pie_chart.js"></script>
+    <script type="module" src="./radar_chart.js"></script>
+  </body>
+</html>
