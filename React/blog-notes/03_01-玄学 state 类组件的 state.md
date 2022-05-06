@@ -83,7 +83,7 @@ this.setState({ number: 1 }, () => {
 
 上述流程图示:
 
-![React 底层 setState 执行流程](images/blog-notes/00-setState%20的执行流程.png)
+![React 底层 setState 执行流程](./../images/blog-notes/03_01-setState%20的执行流程.png)
 
 ### 类组件如何限制 state 更新视图
 
@@ -185,7 +185,7 @@ export default class Index extends React.Component {
 
 上述代码在整个 React 上下文执行栈中的状态：
 
-![默认的批量状态更新](images/blog-notes/01-默认的批量状态更新.png)
+![默认的批量状态更新](/images/blog-notes/03_02-默认的批量状态更新.png)
 
 异步操作代码里面的批量更新规则会被打破，比如在上述代码的 handleClick() 使用 Promise 或者 setTimeout：
 
@@ -217,7 +217,7 @@ handleClick = () => {
 }
 ```
 
-![异步任务中的批量状态更新](images/blog-notes/02-异步任务中的批量状态更新.png)
+![异步任务中的批量状态更新](./../images/blog-notes/03_03-异步任务中的批量状态更新.png)
 
 **提问**：如何在如上异步环境中，继续开启批量更新模式？
 

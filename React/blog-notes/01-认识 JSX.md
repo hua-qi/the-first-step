@@ -73,7 +73,7 @@ function Index() {
 
 类组件执行 render() 方法时，JSX 代码即会转变为 React.createElement() 然后返回函数处理结果
 
-![类组件-render()-执行结果](/images/00-class-render函数执行结果.png)
+![类组件-render()-执行结果](./../images/blog-notes/01_01-class-render函数执行结果.png)
 
 | jsx 元素类型                   | react.createeElement 转换后                       | type 属性                  |
 | :----------------------------- | :------------------------------------------------ | :------------------------- |
@@ -115,7 +115,7 @@ export const MemoComponent = 14;          // 对应 React.memo 返回的组件
 
 ### jsx 最终形成的 fiber 结构图
 
-![demo 对应的 fiber 结构](./images//01-fiber%20%E7%BB%93%E6%9E%84%E5%9B%BE.awebp)
+![demo 对应的 fiber 结构](../images/blog-notes/01_02-fiber%20%E7%BB%93%E6%9E%84%E5%9B%BE.awebp)
 
 fiber 对应关系
 

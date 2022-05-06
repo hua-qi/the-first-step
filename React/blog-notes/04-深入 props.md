@@ -109,7 +109,7 @@ class Index extends React.Component {
 
 PropsComponent 如果是一个类组件，可以通过 this.props 访问到 props
 
-![demo-props](images/blog-notes/03-深入%20props.png)
+![demo-props](/images/blog-notes/04_01-深入%20props.png)
 
 ## React 如何定义的 props
 
