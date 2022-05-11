@@ -13,8 +13,13 @@ import "./App.css";
 // import Index from "./demo/Ref 高阶使用/03-ref 实现组件通信_类组件 ref";
 // import Index from "./demo/Ref 高阶使用/04-ref 实现组件通信_函数组件";
 // import Index from "./demo/Ref 高阶使用/05-ref 实现函数组件缓存数据";
-import Index from "./demo/05-理解 lifeCycle";
+// import Index from "./demo/05-理解 lifeCycle";
 // import Index from "./demo/Ref 高阶使用/06-ref 原理 - demoRef";
+// import Index from "./demo/07-提供者 context";
+// import Index from "./demo/Context/00-动态 Context";
+// import Index from "./demo/Context/01-嵌套 Provider";
+// import Index from "./demo/Context/02-逐层传递 Provider";
+import Index from "./demo/Context/03-切换主题模式";
 
 function App() {
   return (
