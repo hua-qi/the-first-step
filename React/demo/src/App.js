@@ -19,7 +19,8 @@ import "./App.css";
 // import Index from "./demo/Context/00-动态 Context";
 // import Index from "./demo/Context/01-嵌套 Provider";
 // import Index from "./demo/Context/02-逐层传递 Provider";
-import Index from "./demo/Context/03-切换主题模式";
+// import Index from "./demo/Context/03-切换主题模式";
+import Index from "./demo/tabs";
 
 function App() {
   return (
