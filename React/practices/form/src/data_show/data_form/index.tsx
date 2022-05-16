@@ -1,19 +1,19 @@
 import { FC, memo, useState } from "react";
-import { Radio, Input, Button } from "antd";
+import { Form, Radio, Input, Button } from "antd";
 
 import { ImageUpload } from "../../components/form";
-import "antd/dist/antd.css";
 
 import type { IValidator } from "../../tools";
+import type { IAddData } from "../type";
 import { regexpValidator } from "../../tools";
 import { StyledForm } from "./styled";
 const { Item } = StyledForm;
 
 const formInitialValues = {
   type: "color",
-  text: "汉字",
-  key: "english",
-  value: "#fff",
+  text: "",
+  englishText: "",
+  value: "",
 };
 
 const CHNameValidator: IValidator = regexpValidator(
@@ -31,24 +31,69 @@ const colorValidator: IValidator = regexpValidator(
   "请输入合法的 16 进制颜色值"
 );
 
-const DataForm: FC = memo(() => {
+const widthValidator: IValidator = regexpValidator(
+  "^\\d+((px)|%)?$",
+  "请输入合法的宽度值"
+);
+const heightValidator: IValidator = regexpValidator(
+  "^\\d+((px)|%)?$",
+  "请输入合法的高度值"
+);
+
+type PropsType = {
+  addColorData: IAddData;
+  addImageData: IAddData;
+};
+
+const DataForm: FC<PropsType> = memo(props => {
+  // 获取父组件添加数据方法
+  const { addColorData, addImageData } = props;
+  // 获取当前组件实例（主要用于与 ImageUpload 组件做数据交互）
+  const [form] = Form.useForm();
   const [type, setType] = useState("color");
+  const [formatValue, setFormatValue] = useState<any>({});
+  // 打印现有数据
+  console.log(formatValue);
 
   const typeChange = (e: any) => {
     setType(e.target.value);
   };
 
   const onFinish = (values: any) => {
-    const { key, type, text, value } = values;
+    const { englishText, type, text, value, imageUrl, width, height } = values;
 
-    const formatValue: any = {
-      [`${key}`]: {
+    if (value) {
+      addColorData({ key: Math.random(), type, text, value });
+      setFormatValue({
+        [englishText]: {
+          type,
+          text,
+          value,
+        },
+        ...formatValue,
+      });
+    } else {
+      addImageData({
+        key: Math.random(),
         type,
         text,
-        value,
-      },
-    };
-    console.log("Sucess: ", formatValue);
+        src: imageUrl,
+        width,
+        height,
+      });
+      setFormatValue({
+        [englishText]: {
+          type,
+          text,
+          value: {
+            imageUrl,
+            width,
+            height,
+          },
+          ...formatValue,
+        },
+      });
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -58,6 +103,7 @@ const DataForm: FC = memo(() => {
   return (
     <StyledForm
       name="designForm"
+      form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={formInitialValues}
@@ -96,7 +142,7 @@ const DataForm: FC = memo(() => {
       </Item>
       <Item
         label="英文名称"
-        name="key"
+        name="englishText"
         rules={[
           {
             required: true,
@@ -110,7 +156,7 @@ const DataForm: FC = memo(() => {
       </Item>
       {type === "color" ? (
         <Item
-          label="内容"
+          label="颜色值"
           name="value"
           rules={[
             {
@@ -124,9 +170,47 @@ const DataForm: FC = memo(() => {
           <Input />
         </Item>
       ) : (
-        <Item label="内容" name="value">
-          <ImageUpload />
-        </Item>
+        <>
+          <Item
+            label="图片"
+            name="imageUrl"
+            rules={[
+              {
+                required: true,
+                message: "请上传图片",
+              },
+            ]}>
+            <ImageUpload />
+          </Item>
+          <Item
+            label="宽度"
+            name="width"
+            rules={[
+              {
+                required: true,
+                message: "请填写宽度值",
+              },
+              {
+                validator: widthValidator,
+              },
+            ]}>
+            <Input />
+          </Item>
+          <Item
+            label="高度"
+            name="height"
+            rules={[
+              {
+                required: true,
+                message: "请填写高度值",
+              },
+              {
+                validator: heightValidator,
+              },
+            ]}>
+            <Input />
+          </Item>
+        </>
       )}
       <Item
         wrapperCol={{

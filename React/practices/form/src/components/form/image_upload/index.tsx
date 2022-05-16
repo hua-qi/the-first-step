@@ -1,5 +1,6 @@
-import { Component } from "react";
-import { Upload, message } from "antd";
+import { memo, useState } from "react";
+
+import { Upload, message, Form } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 function getBase64(img: any, callback: Function) {
@@ -20,54 +21,54 @@ function beforeUpload(file: any) {
   return isJpgOrPng && isLt2M;
 }
 
-class ImageUpload extends Component {
-  state = {
-    loading: false,
-    imageUrl: ""
-  };
+const ImageUpload = memo(() => {
+  // 获取当前上下文所在的 form 实例
+  const form = Form.useFormInstance();
 
-  handleChange = (info: any) => {
+  const [isLoading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleChange = (info: any) => {
     if (info.file.status === "uploading") {
-      this.setState({ loading: true });
+      setLoading(true);
       return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: any) =>
-        this.setState({
-          imageUrl,
-          loading: false
-        })
-      );
+      getBase64(info.file.originFileObj, (imageUrl: any) => {
+        setLoading(true);
+        setImageUrl(imageUrl);
+      });
+      const { image_url } = info.file.response;
+      // 将 image_url 作为属性值传递给 form.value
+      form.setFieldsValue({
+        imageUrl: image_url,
+      });
     }
   };
 
-  render() {
-    const { loading, imageUrl } = this.state;
-    const uploadButton = (
-      <div>
-        {loading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div style={{ marginTop: 8 }}>Upload</div>
-      </div>
-    );
-    return (
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
-        {imageUrl ? (
-          <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-        ) : (
-          uploadButton
-        )}
-      </Upload>
-    );
-  }
-}
+  const uploadButton = (
+    <div>
+      {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  return (
+    <Upload
+      name="picture"
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      action="/api/uploadImg"
+      beforeUpload={beforeUpload}
+      onChange={e => handleChange(e)}>
+      {imageUrl ? (
+        <img src={imageUrl} alt="预览图片" style={{ width: "100%" }} />
+      ) : (
+        uploadButton
+      )}
+    </Upload>
+  );
+});
 
 export { ImageUpload };

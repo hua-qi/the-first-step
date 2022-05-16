@@ -6,6 +6,9 @@ Mock.mock("/api/uploadImg", "post", (options: any) => {
   console.log(options);
 
   return Mock.mock({
-    status: 200,
+    code: 200,
+    status: "done",
+    message: "上传成功",
+    image_url: "@image('@integer', '#894FC4', 'huaqi', 'png', 'image')",
   });
 });
