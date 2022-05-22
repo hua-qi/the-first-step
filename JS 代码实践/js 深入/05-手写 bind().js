@@ -39,12 +39,18 @@ Function.prototype.bind02 = function (context) {
   let self = this;
   // 此时是 原函数 bind this 时接收参数
   let args = Array.prototype.slice.call(arguments, 1);
-  return function () {
+
+  const fBound = function () {
     // 此时是 经过 bind 处理后的函数 接收参数
     let bindArgs = Array.prototype.slice.call(arguments);
     return self.apply(context, args.concat(bindArgs));
   };
+
+  console.log(1);
+  console.log(fBound.__proto__);
+  return fBound;
 };
+console.log(foo.__proto__);
 let foo03 = foo.bind02(obj, "huaqi");
 // let ret = foo03(21);
 // console.log(ret);
@@ -78,10 +84,12 @@ Function.prototype.bind03 = function (context) {
     );
   };
 
-  // 修改 经bind03() 处理的新函数 prototype 为 原调用者的 prototype
-  // 此时有一个弊端, 由于 fBound 与 调用 bind03()的原函数共用一个 prototye
-  // 故而修改其中任意一个的 prototype 会影响其他
-  //   fBound.prototype = this.prototype;
+  /* 
+  修改 经bind03() 处理的新函数 prototype 为 原调用者的 prototype
+  此时有一个弊端, 由于 fBound 与 调用 bind03()的原函数共用一个 prototye
+  故而修改其中任意一个的 prototype 会影响其他
+    fBound.prototype = this.prototype;
+  */
 
   // 设定一个中转站
   let fNOP = function () {};
