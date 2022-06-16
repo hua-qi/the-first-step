@@ -17,3 +17,8 @@ console.log("global");
 console.log(global);
 console.log("+++++++++++++++++++++++++++");
 console.log(module.__proto__.__proto__);
+
+console.log("======================");
+
+const name = require("../test/foo");
+console.log(name);
