@@ -40,18 +40,17 @@ const getFilesPro = (dirname, filesName = []) => {
 
     while (dirsArr.length > 0) {
       const dir = dirsArr.shift();
-      fs.readdir(dir, { withFileTypes: true }, (err, files) => {
-        if (err) rejects(err);
-        for (let file of files) {
-          if (file.isDirectory()) {
-            const dirPath = path.resolve(dir, file.name);
-            dirsArr.push(dirPath);
-          } else {
-            filesName.push(file.name);
-          }
+      const files = fs.readdirSync(dir, { withFileTypes: true });
+      for (let file of files) {
+        if (file.isDirectory()) {
+          const dirPath = path.resolve(dir, file.name);
+          dirsArr.push(dirPath);
+        } else {
+          filesName.push(file.name);
         }
-      });
+      }
     }
+
     if (!dirsArr.length) resolve(filesName);
   });
 };
