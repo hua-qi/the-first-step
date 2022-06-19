@@ -33,7 +33,7 @@ console.log(filePath); // E:\user\huaqi\qi.txt */
 // resolve() 会判断拼接的路径字符串中，是否有以 / 、./ 、../ 开头的路径
 
 /* const basepath = "../user/huaqi"; // 修改 user 前不同的符号如 /、./、../ 观察打印结果的不同
-const filename = "/qi.txt"; // resolve 亦会根据此处 qi 前是否有符号而得出不同的结果
+const filename = "/qi.txt"; // resolve 亦会根据此处 qi 前是否有符号而得出不同的结果（./  / ../）
 
 const filePath_join = path.join(basepath, filename);
 const filePath_resolve = path.resolve(basepath, filename);
