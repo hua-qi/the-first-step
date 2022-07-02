@@ -17,6 +17,12 @@
     - [约束（Constraints）](#约束constraints)
     - [泛型约束实战（Working with Constrained Values）](#泛型约束实战working-with-constrained-values)
     - [声明类型参数（Specifying Type Arguments）](#声明类型参数specifying-type-arguments)
+    - [冴语建议-如何写好泛型](#冴语建议-如何写好泛型)
+      - [类型参数下移（Push Type Parameters Down）](#类型参数下移push-type-parameters-down)
+      - [使用更少的类型参数（Use Fewer Type Parameters）](#使用更少的类型参数use-fewer-type-parameters)
+      - [类型参数应该出现两次（Type Parameters Should Appear Twice）](#类型参数应该出现两次type-parameters-should-appear-twice)
+  - [可选参数（Optional Parameters）](#可选参数optional-parameters)
+    - [回调中的可选参数（Optional Parameters in Callbacks）](#回调中的可选参数optional-parameters-in-callbacks)
 
 ## 函数类型表达式（Function Type Expressions）
 
@@ -239,3 +245,164 @@ const arr = combine([1, 2, 3], ["hello"]);
 // 若执意将两个不同类型的数组进行合并，可以手动指定 Type
 const arr = combine<string | number>([1, 2, 3], ["hello"]);
 ```
+
+### 冴语建议-如何写好泛型
+
+#### 类型参数下移（Push Type Parameters Down）
+
+函数对比示例：
+
+```typescript
+function firstElement1<Type>(arr: Type[]) {
+    return arr[0];
+}
+
+function firstElement2<Type extends any[]>(arr: Type) {
+    return arr[0];
+}
+
+// a: number (good)
+const a = firstElement1([1, 2, 3]);
+// b: any (bad)
+const b = firstElement2([1, 2, 3]);
+```
+
+对比：
+
+第一个函数可以推断出返回值的类型为 number，这是 TS 由函数调用时推断的。
+
+第二个函数推断的返回值类型为 any，这是 TS 由给出的约束类型推断的。
+
+显然，第一个函数要好很多。
+
+关于本节的 Push Type Parameters Down 含义，在《重构》中，有一个关于**函数下移**（Push Down Method）的优化方法：如果超类中的某个函数只与一个或者少数几个子类有关，那么最好将其从超类中移到真正关心它的子类中去。即只在超类保留共用的行为。
+
+上述将超类中的函数本体复制到具体需要的子类的方法，可以称之为 “push down”，本节中去除 extend any[]，将具体的推断交给 Type 的操作就类似于 push down。
+
+**Rule**：使用泛型时，尽量直接使用类型参数而不是进行约束。
+
+#### 使用更少的类型参数（Use Fewer Type Parameters）
+
+函数对比示例：
+
+```typescript
+function filter1<Type>(arr: Type[], func: (arg: Type) => boolean): Type[] {
+    return arr.filter(func);
+}
+
+function filter2<Type, Func extends (arg: Type) => boolean>(arr: Type[], func: Func): Type[] {
+    return arr.filter(func);
+}
+```
+
+对于第二个函数，创建了一个并没有关联两个值的类型参数 Func，这意味着调用者不得不毫无理由的手动指定一个额外的类型参数。Func 什么也没做，却导致函数更难阅读和推断。
+
+**Rule**：尽可能使用更少的类型参数
+
+#### 类型参数应该出现两次（Type Parameters Should Appear Twice）
+
+函数对比示例：
+
+```typescript
+funnction greet1<Str extends string>(s: Str) {
+    console.log("Hello, " + s);
+}
+
+greet1("world");
+
+function greet2(s: string) {
+    console.log("Hello, ", + s);
+}
+```
+
+对比两个函数可见，函数并不需要泛型。
+
+**注**：类型参数是用于关联多个值之间的类型。如果一个类型参数只在函数签名中出现了一次，那它就没有跟任何东西产生关联。。
+
+**Rule**：如果一个类型参数仅仅出现在一个地方，强烈建议重新考虑是否真的需要它。
+
+## 可选参数（Optional Parameters）
+
+JS 中的函数经常会被传入非固定数量的参数，比如 Number.prototype.toFixed() 支持传入一个可选的参数：
+
+```typescript
+function fn1(n: number) {
+    console.log(n.toFixed()); // 0 arguments
+    console.log(n.toFixed(3)); // 1 arguments
+}
+
+// ? 表示参数可选
+function fn2(x?: number) {
+    // ....
+}
+
+fn2(); // Ok
+fn2(10); // Ok
+
+declare function fn3(x?: number): void;
+function fn3(x = 10) {}
+
+// cut All OK
+fn3();
+fn3(10);
+fn3(undefined); // 当函数的参数为可选时，可以传入 undefined
+
+```
+
+对于第二个函数，尽管其参数被声明为 number 类型，但其实际上的类型为 number | undefined，这是因为在 JS 中未指定的函数参数会被赋值为 undefined。
+
+当然可以如 fn3() 为参数提供一个默认值，但此时显然不符合 Number.prototype.toFixed() 其对可选参数的要求。
+
+此时 fn3() 函数体内，x 的类型为 number，因为参数的 undefined 值会被替换为 10。
+
+### 回调中的可选参数（Optional Parameters in Callbacks）
+
+错误示例：
+
+```typescript
+function myForEach(arr: any[], callback: (arg: any, index?: number) => void) {
+    for (let i = 0; i < arr.length; i++) {
+        callback(arr[i], i);
+    }
+}
+
+// 将回调函数的 index 设置为可选参数，本意是希望下列调用是合法的：
+myForEach([1, 2, 3], a => console.log(a));
+myForEach([1, 2, 3], (a, i) => console.log(a, i));
+
+```
+
+对于上述情况，TS 并不如我们所想一致，其认为该回调函数可能只会被传入一个参数，即如下情况：
+
+```typescript
+function myForEach(arr: any[], callback: (arg: any, index?: number) => void) {
+    for (let i = 0; i < arr.length; i++) {
+        // I don't like providing the index today
+        callback(arr[i]);
+    }
+}
+
+// 函数调用时，TS 会进行报错。（当然实际并无可能）
+myForEach([1, 2, 3], (a, i) => {
+    console.log(i.toFixed());
+    // Object is possibly 'undefined'.
+})
+```
+
+对于上述情况，如何修改呢？不设置可选参数就可以：
+
+```typescript
+function myForEach(arr: any[], callback: (arg: any, index: number) => void) {
+    for (let i = 0; i < arr.length; i++) {
+        callback(arr[i], i);
+    }
+};
+
+myForEach([1, 2, 3], (a, i) => {
+    console.log(a);
+})
+```
+
+**注**：在 JS 中，如果调用一个函数时，传入了比其需要更多参数，额外的参数就会被忽略。TS 亦是同样的做法。
+
+当声明一个回调函数的类型时，不要写一个可选参数，除非真的打算调用函数的时候不传入实参。
