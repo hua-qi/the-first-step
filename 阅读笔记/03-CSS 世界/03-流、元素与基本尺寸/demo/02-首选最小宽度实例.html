@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>首选最小宽度实例</title>
+    <style>
+      .ao,
+      .tu {
+        display: inline-block;
+        width: 0;
+        font-size: 14px;
+        line-height: 18px;
+        margin: 35px;
+        color: #fff;
+      }
+
+      .ao::before,
+      .tu::before {
+        outline: 2px solid #cd0000;
+        font-family: Consolas, Monaco, monospace;
+      }
+
+      .ao::before {
+        content: "love你love";
+      }
+
+      .tu {
+        direction: rtl;
+      }
+
+      .tu::before {
+        content: "我love你";
+      }
+    </style>
+  </head>
+  <body>
+    <span class="ao"></span>
+    <span class="tu"></span>
+  </body>
+</html>

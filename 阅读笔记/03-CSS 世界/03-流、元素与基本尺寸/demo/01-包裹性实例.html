@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>包裹性实例</title>
+    <style>
+      .container {
+        width: 300px;
+        margin: 100px auto;
+      }
+
+      .box {
+        padding: 10px;
+        background-color: #cd0000;
+        color: #fff;
+        text-align: center;
+      }
+
+      .content {
+        display: inline-block;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <p id="conMore" class="content">文字内容</p>
+      </div>
+      <!-- 按钮 -->
+      <p><button id="btnMore">更多文字</button></p>
+    </div>
+
+    <script>
+      const btn = document.getElementById("btnMore"),
+        content = document.getElementById("conMore");
+
+      if (btn && content) {
+        btn.onclick = function () {
+          content.innerHTML += "-新增文字";
+        };
+      }
+    </script>
+  </body>
+</html>
