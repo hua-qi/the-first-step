@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>内在盒子的值设定</title>
+    <style>
+      .div {
+        width: 100px;
+        padding: 20px;
+        border: 20px solid;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="div">
+      此时元素的 offsetWidth 是：<span id="divWidth"></span>
+    </div>
+
+    <script>
+      const eleShowWidth = document.getElementById("divWidth");
+      if (eleShowWidth) {
+        eleShowWidth.innerHTML = eleShowWidth.parentNode.offsetWidth;
+      }
+    </script>
+  </body>
+</html>
