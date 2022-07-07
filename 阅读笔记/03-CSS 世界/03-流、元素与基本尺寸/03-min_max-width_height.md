@@ -42,6 +42,8 @@ img {
 
 上述方式会有体验上的问题：在加载图片时其占据高度会从 0 变成计算高度，图文会有明显的瀑布式下落。
 
+---
+
 ## 与众不同的初始值
 
 由前文得知，width/height 的默认值为 auto。
@@ -50,6 +52,8 @@ min-width/max-width 和 min-height/max-height 的初始值就要复杂些，具�
 
 - max-width 和 max-height 的初始值为 none
 - min-width 和 min-height 的初始值为 auto
+
+---
 
 ## 超越 !important，超越最大
 
@@ -95,6 +99,8 @@ CSS 世界中，min-width/max-width 和 min-height/max-height 属性间，以及
 ```
 
 由上述代码，最小宽度大于最大宽度，遵循“超越最大”规则（注意不是“后来居上”规则），最终 max-width 被忽略，.container 元素表现为至少宽 1400px。
+
+---
 
 ## 任意高度元素的展开收起动画技术
 
