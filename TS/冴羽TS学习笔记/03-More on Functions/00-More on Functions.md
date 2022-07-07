@@ -40,7 +40,7 @@ function printToConsole(s: string) {
 greeter(printToConsole)
 ```
 
-上述函数中，语法 (a: string) => void，表示名为 a 的函数，其参数类型是 string，且该函数并没有任何返回值。
+上述函数中，语法 (a: string) => void，表示该函数，其参数名为 a，该参数类型类型是 string，且该函数并没有任何返回值。
 
 如果函数的参数类型没有明确给出，会被隐式设置为 any。
 
@@ -56,6 +56,8 @@ function greeter(fn: GreetFunction) {
     // ...
 }
 ```
+
+---
 
 ## 调用签名（Call Signatures）
 
@@ -75,6 +77,8 @@ function doSomething(fn: DescribableFunction) {
 ```
 
 **注**：该语法与函数类型表达式稍有不同，在参数列表和返回类型之间使用 : 符号进行分隔，而不是 =>。
+
+---
 
 ## 构造签名（Construct Signatures）
 
@@ -102,6 +106,8 @@ interface CallOrConstruct {
     new (s: string): Date;
 }
 ```
+
+---
 
 ## 泛型函数（Generic Functions）
 
@@ -320,6 +326,8 @@ function greet2(s: string) {
 **注**：类型参数是用于关联多个值之间的类型。如果一个类型参数只在函数签名中出现了一次，那它就没有跟任何东西产生关联。。
 
 **Rule**：如果一个类型参数仅仅出现在一个地方，强烈建议重新考虑是否真的需要它。
+
+---
 
 ## 可选参数（Optional Parameters）
 

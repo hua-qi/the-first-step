@@ -166,6 +166,8 @@ const admins = db.filterUsers(() => this.admin);
 // Element implicitly has an 'any' type because type 'typeof globalThis' has no index signature. 
 ```
 
+---
+
 ## 其他需要知道的类型（Other Types to Know About）
 
 ### void
@@ -261,6 +263,8 @@ function doSomething(f: Function) {
 
 如果准备接受一个黑盒的函数，其不打算调用它，() => void 会更安全一些。
 
+---
+
 ## 剩余参数（Rest Parameters and Arguments）
 
 ### parameters 与 arguments
@@ -315,6 +319,8 @@ const args = [8, 5] as const;
 const angle = Math.atan2(...args);
 ```
 
+---
+
 ## 参数解构（Parameter Destructuring）
 
 可以使用参数解构将对象参数解构为函数体内的一个或多个局部变量。
@@ -342,6 +348,8 @@ function sum({ a, b, c }: ABC) {
   console.log(a + b + c);
 }
 ```
+
+---
 
 ## 函数的可赋值性（Assignability of Functions）
 
