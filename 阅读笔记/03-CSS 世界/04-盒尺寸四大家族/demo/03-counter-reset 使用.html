@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>counter-reset 使用</title>
+    <style>
+      .counter {
+        counter-reset: counter1 2 counter2 3;
+        font-size: 32px;
+        font-family: Arial black;
+        color: #cd0000;
+      }
+
+      .counter::before {
+        content: counter(counter1);
+      }
+
+      .counter::after {
+        content: counter(counter2);
+      }
+    </style>
+  </head>
+  <body>
+    <p>计数器：</p>
+    <p class="counter"></p>
+  </body>
+</html>

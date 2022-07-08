@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>content 辅助元素与布局</title>
+    <style>
+      .box {
+        width: 256px;
+        height: 256px;
+        border-bottom: 1px dashed #ccc;
+        text-align: justify;
+      }
+
+      .box::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+      }
+
+      .box::after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+      }
+
+      .bar {
+        display: inline-block;
+        width: 20px;
+        height: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box" class="box">
+      <li class="bar"></li>
+      <li class="bar"></li>
+      <li class="bar"></li>
+      <li class="bar"></li>
+    </div>
+    <p>
+      <button id="button">再增加一条数据</button>
+    </p>
+
+    <script>
+      if (document.querySelector) {
+        const eleBox = document.getElementById("box");
+        // 目前柱子元素和个数
+        const eleBars = document.querySelectorAll("#box > i");
+        const lenBar = eleBars.length;
+
+        if (eleBox && lenBar) {
+          for (let index = 0; index < lenBar; index++) {
+            // 柱状图的高度和背景色随机
+            eleBars[index].style.height = Math.ceil(256 * Math.random()) + "px";
+            eleBars[index].style.backgroundColor =
+              "#" + (Math.random() + "").slice(-6);
+          }
+        }
+
+        // 增加数据
+        const eleBtn = document.getElementById("button");
+        if (eleBtn && lenBar) {
+          eleBtn.onclick = function () {
+            // 随机高度和背景色
+            const height = Math.ceil(256 * Math.random()) + "px";
+            const backgroundColor = "#" + (Math.random() + "").slice(-6);
+
+            // 创建元素
+            const eleClone = eleBars[0].cloneNode();
+            eleClone.style.height = height;
+            eleClone.style.backgroundColor = backgroundColor;
+
+            lenBar++;
+
+            // 最多数据限制
+            if (lenBar === 10) {
+              this.setAttribute("disabled", "disabled");
+            }
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>嵌套子序列递增实现</title>
+    <style>
+      .reset {
+        padding-left: 20px;
+        counter-reset: counter;
+      }
+
+      .counter::before {
+        content: counters(counter, "-") ".";
+        counter-increment: counter;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reset">
+      <div class="counter">
+        一级标题
+        <div class="reset">
+          <div class="counter">二级标题</div>
+          <div class="counter">
+            二级标题
+            <div class="reset">
+              <div class="counter">三级标题</div>
+              <div class="counter">三级标题</div>
+              <div class="counter">三级标题</div>
+            </div>
+          </div>
+          <div class="counter">二级标题</div>
+        </div>
+      </div>
+      <div class="counter">一级标题</div>
+      <div class="counter">
+        一级标题
+        <div class="reset">
+          <div class="counter">二级标题</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

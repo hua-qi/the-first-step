@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS content 属性使用</title>
+    <style>
+      .no-replace {
+        width: 180px;
+        height: 36px;
+        background: center url(../images/demo-00-CSS.png);
+        background-size: cover;
+        /* 隐藏文字 */
+        text-indent: -999px;
+      }
+
+      .content {
+        width: 180px;
+        content: url(../images/demo-00-CSS.png);
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="no-replace">《CSS 世界》</h1>
+    <h1 class="content">《CSS 世界》</h1>
+  </body>
+</html>

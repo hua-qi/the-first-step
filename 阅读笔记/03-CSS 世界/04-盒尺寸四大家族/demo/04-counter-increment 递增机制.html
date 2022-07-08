@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>counter-increment 递增机制</title>
+    <style>
+      .counter {
+        counter-reset: counter 2;
+        font-size: 32px;
+        font-family: Arial black;
+        color: #cd0000;
+      }
+
+      /* 
+        HTML 先行 ::before 伪元素，此时 2 + 1 = 3
+        再渲染 ::after 伪元素，此时 3 + 1 = 4
+      */
+      .counter::after,
+      .counter::before {
+        content: counter(counter);
+        counter-increment: counter;
+      }
+    </style>
+  </head>
+  <body>
+    <p>计数变化顺序随 HTML 渲染顺序：</p>
+    <p class="counter"></p>
+  </body>
+</html>
