@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>padding 与图形生成实例</title>
+    <style>
+      .icon-menu {
+        display: inline-block;
+        width: 140px;
+        height: 10px;
+        padding: 35px 0;
+        border-top: 10px solid;
+        border-bottom: 10px solid;
+        /* 关键字 currentColor 表示当前元素所继承的文字颜色*/
+        background-color: currentColor;
+        background-clip: content-box;
+      }
+
+      .icon-dot {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+        border: 10px solid;
+        border-radius: 50%;
+        background-color: currentColor;
+        background-clip: content-box;
+      }
+    </style>
+  </head>
+  <body>
+    <i class="icon-menu"></i>
+    <i class="icon-dot"></i>
+  </body>
+</html>

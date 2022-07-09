@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>padding 对内联元素高度的影响</title>
+    <style>
+      div {
+        height: 40px;
+        border: 1px solid #000;
+        overflow: auto;
+      }
+
+      a {
+        padding: 50px;
+        background-color: #cd0000;
+        color: #fff;
+      }
+
+      .relative {
+        position: relative;
+        width: 100px;
+        height: 50px;
+        background-color: #cd0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <a href="/#">链接</a>
+    </div>
+    <br />
+    <div>
+      <div class="relative">relative</div>
+    </div>
+  </body>
+</html>

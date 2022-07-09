@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>空内联元素的 padding 百分比设置</title>
+    <style>
+      div {
+        width: 200px;
+        margin: 200px;
+        border: 2px dashed #cd0000;
+      }
+
+      span {
+        /* 
+            内联元素的垂直 padding 会使 strut 显现
+            strut 高度会参与计算
+            进而影响元素宽高计算
+         */
+        padding: 50%;
+        background-color: gray;
+      }
+
+      .strut {
+        /* 
+            由于内联元素默认的高度完全受 font-size 控制
+         */
+        font-size: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <span></span>
+    </div>
+    <div>
+      <span class="strut"></span>
+    </div>
+  </body>
+</html>
