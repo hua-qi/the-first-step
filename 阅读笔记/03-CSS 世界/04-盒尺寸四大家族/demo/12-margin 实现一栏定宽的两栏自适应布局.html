@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>margin 实现一栏定宽的两栏自适应布局</title>
+    <style>
+      .box {
+        overflow: hidden;
+      }
+
+      .img {
+        width: 128px;
+      }
+
+      /* 左浮动 */
+      .box-left > img {
+        float: left;
+      }
+
+      .box-left > p {
+        margin-left: 140px;
+      }
+
+      /* 右浮动 */
+      .box-right > img {
+        float: right;
+      }
+
+      .box-right > p {
+        margin-right: 140px;
+      }
+
+      /* 右浮动, 图片在 DOM 在后，和视觉表现一致 */
+      .box-right-same > .full {
+        width: 100%;
+        float: left;
+      }
+
+      .box-right-same > .full > p {
+        margin-right: 140px;
+      }
+
+      .box-right-same > img {
+        float: left;
+        margin-left: -128px;
+      }
+    </style>
+  </head>
+  <body>
+    <h4>左侧固定</h4>
+    <div class="box box-left">
+      <img src="../images/demo-00-CSS.png" alt="" class="img" />
+      <p>
+        DOM文档流中，图片定宽在左侧，文字内容在右侧，和视觉呈现的前后顺序一致。
+      </p>
+    </div>
+
+    <h4>右侧固定 - DOM 顺序相反</h4>
+    <div class="box box-right">
+      <img src="../images/demo-00-CSS.png" alt="" class="img" />
+      <p>DOM文档流中，图片定宽在左侧，视觉上却在右侧，顺序表现不一致。</p>
+    </div>
+
+    <h4>右侧固定-DOM顺序和视觉一致</h4>
+    <div class="box box-right-same">
+      <div class="full">
+        <p>DOM文档流中，图片定宽在右侧，视觉呈现也在右侧，顺便表现此时一致。</p>
+      </div>
+      <img src="../images/demo-00-CSS.png" alt="" class="img" />
+    </div>
+  </body>
+</html>
