@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>border 绘制与 color 变色</title>
+    <style>
+      .add {
+        display: inline-block;
+        width: 76px;
+        height: 76px;
+        color: #ccc;
+        border: 2px dashed;
+        text-indent: -12em;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .add:hover {
+        color: #34538b;
+      }
+
+      .add::before,
+      .add::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
+
+      .add::before {
+        width: 20px;
+        border-top: 4px solid;
+        margin: -2px 0 0 -10px;
+      }
+
+      .add::after {
+        height: 20px;
+        border-left: 4px solid;
+        margin: auto;
+        margin: -10px 0 0 -2px;
+      }
+
+      /* 
+        对比案例
+        使用 background 实现相同效果
+       */
+      .add-back {
+        display: inline-block;
+        width: 76px;
+        height: 76px;
+        border: 2px dashed #ccc;
+        text-indent: -12em;
+        transition: color 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .add-back::before,
+      .add-back::after {
+        content: "";
+        background-color: #ccc;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .add-back::before {
+        width: 20px;
+        height: 4px;
+        margin: auto;
+      }
+
+      .add-back::after {
+        width: 4px;
+        height: 20px;
+        margin: auto;
+      }
+
+      /* hover 变色 */
+      .add-back:hover {
+        border-color: #06c;
+      }
+
+      .add-back:hover::before,
+      .add-back:hover::after {
+        background-color: #06c;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="" class="add" title="继续上传"> 添加图片 </a>
+    <br />
+    <a href="" class="add-back" title="继续上传"> 添加图片 </a>
+  </body>
+</html>

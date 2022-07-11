@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>border 实现等高布局</title>
+    <style>
+      /* 导航背景区 border 创建 */
+      .box {
+        text-align: center;
+        border-left: 150px solid #333;
+        background-color: #f0f3f9;
+      }
+
+      /* 清除浮动影响，不能使用 overflow: hidden */
+      .box::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+      /* 布局主结构 */
+      .box > nav {
+        width: 150px;
+        margin-left: -150px;
+        float: left;
+      }
+
+      .box > section {
+        overflow: hidden;
+      }
+
+      /* 导航列表和模块列表 */
+      .nav {
+        line-height: 39px;
+        border-bottom: 1px solid #f0f3f9;
+        color: #fff;
+        margin: 0;
+      }
+
+      .module {
+        line-height: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <nav>
+        <input type="button" id="navMore" value="更多导航" />
+        <h3 class="nav">导航1</h3>
+      </nav>
+      <section>
+        <input type="button" id="moduleMore" value="更多模块" />
+        <div class="module">模块1</div>
+      </section>
+    </div>
+    <script>
+      const navMore = document.getElementById("navMore"),
+        moduleMore = document.getElementById("moduleMore");
+
+      if (navMore && moduleMore) {
+        const nav = document.querySelector("nav"),
+          section = document.querySelector("section");
+
+        let navIndex = 1,
+          sectionIndex = 1;
+
+        const randColor = () => "f" + (Math.random() + "").slice(-1);
+
+        navMore.onclick = function () {
+          navIndex++;
+          nav.insertAdjacentHTML(
+            "beforeend",
+            `<h3 class="nav">导航${navIndex}</h3>`
+          );
+        };
+
+        moduleMore.onclick = function () {
+          sectionIndex++;
+          section.insertAdjacentHTML(
+            "beforeend",
+            `<div class="module" style="background:${`#${[
+              randColor(),
+              randColor(),
+              randColor(),
+            ].join("")}`}">模块${sectionIndex}</div>`
+          );
+        };
+      }
+    </script>
+  </body>
+</html>

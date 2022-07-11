@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>border增加点击区域</title>
+    <style>
+      input[type="string"] {
+        width: 200px;
+        height: 40px;
+        padding: 10px 40px 10px 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      .icon-clear {
+        width: 16px;
+        height: 16px;
+        margin: 2px 0 0 -38px;
+        border: 10px solid;
+        border-radius: 50%;
+        background: #999;
+        color: white;
+        position: absolute;
+        visibility: hidden;
+      }
+
+      .icon-clear::before {
+        content: "×";
+        display: block;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        line-height: 16px;
+      }
+
+      input:valid + .icon-clear {
+        visibility: visible;
+      }
+
+      /* 附赠 border 实现三角形 */
+      div {
+        margin-top: 20px;
+        width: 0;
+        border: 10px solid;
+        border-color: #f30 transparent transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="search" type="string" value="我是初始值" required />
+    <label for="search" class="icon-clear"></label>
+
+    <!-- 附赠 border 实现三角形 -->
+    <div></div>
+
+    <script>
+      const eleLabel = document.querySelector("label[for='search']");
+      eleSearch = document.getElementById("search");
+
+      if (eleLabel && eleSearch) {
+        eleLabel.onclick = function () {
+          eleSearch.value = "";
+        };
+      }
+    </script>
+  </body>
+</html>
