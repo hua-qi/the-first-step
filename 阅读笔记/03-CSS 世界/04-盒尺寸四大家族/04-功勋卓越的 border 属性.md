@@ -39,7 +39,7 @@ div {
 
 ### 语义
 
-border-width 是“边框宽度”，而边框，是不会因为元素尺寸随之按比例变大，这也是不支持百分比值的原因之一。
+border-width 是“边框宽度”，而边框尺寸不受元素尺寸影响，这也是不支持百分比值的原因之一。
 
 ### 使用场景
 
@@ -55,10 +55,10 @@ CSS 世界的背景主要是为图文展示服务的，而边框是为限定背�
 
 - thin
   - 等同于 1px
-- medinum
+- medium
   - 默认值
-    - 因为 border-style: double 至少 3px 才有效果
   - 等同于 3px
+    - 因为 border-style: double 至少 3px 才有效果
 - thick
   - 等同于 4px
 
@@ -72,7 +72,7 @@ border-style 是一个简写属性，用于设定元素所有边框的样式。
 
 **注**，默认 border-style: none。
 
-故而，单纯设置 border-width 或 border-color 没有边框显式
+故而，单纯设置 border-width 或 border-color 没有边框显示
 
 ```css
 div {
@@ -86,7 +86,7 @@ div {
 
 如果设置 border-style 类型值，则会渲染边框，默认宽度 3px。
 
-使用 border-style: none 多出现在**重置变框样式**时。
+使用 border-style: none 多出现在**重置边框样式**时。
 
 若要实现一个没有下边框的边框效果：
 

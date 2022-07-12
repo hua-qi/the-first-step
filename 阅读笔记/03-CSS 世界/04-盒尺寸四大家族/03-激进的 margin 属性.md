@@ -480,7 +480,7 @@ margin: auto 的填充规则如下：
 - 块级元素实现左中右对齐
   - 使用 margin 的 auto 属性
 - 内联元素实现左中右对齐
-  - 使用 taxt-align 进行控制
+  - 使用 text-align 进行控制
 
 ### 为何在父元素定高时 margin: auto 无法实现垂直居中
 
@@ -553,8 +553,8 @@ margin: auto 的填充规则如下：
 3. 绝对定位元素非定位方位的 margin 值“无效”
    - 若绝对定位元素设置 left、top 方向值，此时设置 margin-right/bottom 值将无效
    - margin 并非没起作用。绝对定位元素任意方位的 margin 值无论什么场景下都一直有效
-   - 由于**绝对定位元素的渲染是独立的**，margin 元素无法影响其定位，所以看上去“无效”
+   - 由于**绝对定位元素的渲染是独立的**，margin 属性无法影响其定位，所以看上去“无效”
 4. 定高容器的子元素 margin-bottom 或定宽的子元素的 margin-right 的定位“失效” 。
    - 若想使用 margin 属性改变自身的位置，必须要设置与当前元素定位方向一样的 margin 属性才可以
-   - 默认流下，普通元素的定位方向是左侧以及上方，所以设置 margin-bottom、margin-right 无效
+   - 默认流下，**普通元素的定位方向是左侧以及上方**，所以设置 margin-bottom、margin-right 无效
 5. 内联特性导致 margin 无效
