@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多行文字垂直居中实现</title>
+    <style>
+      .box {
+        width: 280px;
+        line-height: 120px;
+        background-color: #f0f3f9;
+        margin: auto;
+      }
+
+      .content {
+        display: inline-block;
+        line-height: 20px;
+        margin: 0 20px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="content">
+        基于行高实现的多行文字垂直居中效果，需要vertical-align属性帮助。
+      </div>
+    </div>
+  </body>
+</html>
