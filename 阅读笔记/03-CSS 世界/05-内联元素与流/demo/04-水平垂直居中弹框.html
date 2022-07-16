@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水平垂直居中弹框</title>
+    <style>
+      .container {
+        /* 
+        块级盒子声明 position: fixed/absolute 
+        宽度和高度会自动填充容器
+        */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        /* 蒙层 */
+        background: rgba(0, 0, 0, 0.5);
+        /* 使内联内容水平居中呈现 */
+        text-align: center;
+        white-space: nowrap;
+        z-index: 99;
+      }
+
+      .container::after {
+        content: "";
+        display: inline-block;
+        /* 伪元素充当 strut，撑开 container 高度 */
+        height: 100%;
+        /* 使内容垂直居中对齐 */
+        vertical-align: middle;
+      }
+
+      .dialog {
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 6px;
+        background-color: #fff;
+        text-align: left;
+        white-space: normal;
+      }
+
+      .content {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 字符 x 对理解布局很关键 -->
+      x
+      <div class="dialog">
+        <div class="content">内容占位</div>
+      </div>
+    </div>
+  </body>
+</html>

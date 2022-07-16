@@ -16,7 +16,9 @@
     - [了解 vertical-align: top/bottom](#了解-vertical-align-topbottom)
     - [vertical-align: middle 与近似垂直居中](#vertical-align-middle-与近似垂直居中)
   - [理解 vertical-align 文本类属性值](#理解-vertical-align-文本类属性值)
-    - [了解 vertical-align 上标下标类属性值](#了解-vertical-align-上标下标类属性值)
+  - [了解 vertical-align 上标下标类属性值](#了解-vertical-align-上标下标类属性值)
+  - [无处不在的 vertical-align](#无处不在的-vertical-align)
+  - [基于 vertical-align 属性的水平垂直居中弹框](#基于-vertical-align-属性的水平垂直居中弹框)
 
 ## vertical-align 家族基本认识
 
@@ -297,4 +299,93 @@ vertical-align: middle 可以让内联元素的真正意义上的垂直中心位
 
 ---
 
-### 了解 vertical-align 上标下标类属性值
+## 了解 vertical-align 上标下标类属性值
+
+vertical-align 上标下标类属性值指 sub（下标） 和 super （上标）两个值。
+
+HTML 中有类似的两个语义标签 \<sub>、\<sup>，\<sub> 默认 vertical-align: sub，常用在数学公式、化学表达式中； \<sup> 默认 vertical-align: supper，常用作标注。
+
+- vertical-align: super
+  - 提高盒子的基线到父级合适的上标基线位置
+- vertical-align: sub
+  - 降低盒子的基线到父级合适的下标基线位置
+
+对于“合适”这样模棱两可的名词，不利于布局实现。
+
+**注**：CSS 属性值 super/sub 并不会修改文字大小，而 HTML 标签 sup/sub 默认 font-size: smaller。
+
+---
+
+## 无处不在的 vertical-align
+
+**对于内联元素，一定要考虑到幽灵空白节点 strut 以及无处不在的 vertical-align 属性**。
+
+vertical-align 常用属性值分类
+
+- top/bottom
+  - 根据边缘以及行框盒子对齐
+- baseline/middle
+  - 根据字符 x 进行对齐
+
+---
+
+## 基于 vertical-align 属性的水平垂直居中弹框
+
+[基于 vertical-align 属性的水平垂直居中弹框](https://demo.cssworld.cn/5/3-10.php)
+
+[基于 vertical-align 属性的水平垂直居中弹框 - 备份](demo/04-水平垂直居中弹框.html)
+
+核心代码
+
+```html
+<style>
+  .container {
+    /* 
+    块级盒子声明 position: fixed/absolute 
+    宽度和高度会自动填充容器
+    */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* 蒙层 */
+    background: rgba(0, 0, 0, 0.5);
+    /* 使内联内容水平居中呈现 */
+    text-align: center;
+    white-space: nowrap;
+    z-index: 99;
+  }
+
+  .container::after {
+    content: "";
+    display: inline-block;
+    /* 伪元素充当 strut，撑开 container 高度 */
+    height: 100%;
+    /* 使内容垂直居中对齐 */
+    vertical-align: middle;
+  }
+
+  .dialog {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 6px;
+    background-color: #fff;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .content {
+    width: 100px;
+    height: 100px;
+  }
+</style>
+
+<div class="container">
+  <div class="dialog">
+    <div class="content">内容占位</div>
+  </div>
+</div>
+```
+
+使用伪元素模仿“幽灵空白节点”创建一个和外部容器一样高的宽度为 0 的 inline-block 元素，注意 vertical-align: middle 的定义，元素的的垂直中心点和行框盒子基线向上 1/2 x-height 处对齐，伪元素声明 vertical-align: middle，由于其高度 100%，元素中线就是高度 50%，使 container 内容居中。
