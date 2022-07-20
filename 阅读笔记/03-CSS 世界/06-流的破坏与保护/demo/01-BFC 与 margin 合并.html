@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BFC 与 margin 合并</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: black;
+        margin: 50px;
+      }
+
+      .father {
+        /* 
+        <html> 根元素；
+        float: 不为 none；
+        overflow 值为 auto、scroll、hidden；
+        display 值为 table-cell、table-caption、inline-block；
+        postion 的值不为 relative、static；
+       */
+        display: table-cell;
+      }
+
+      .son {
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="father">
+      <div class="son"></div>
+    </div>
+  </body>
+</html>
