@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无依赖绝对定位与超越常规布局的排版</title>
+    <style>
+      /* 表单容器宽度设定 */
+      .regist-box {
+        width: 300px;
+        margin: 0 auto;
+      }
+
+      /* 表单项设定 */
+      .regist-group {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* 定位在盒子外部的红色星号 * */
+      .regist-star {
+        position: absolute;
+        margin-left: -1em;
+        font-family: simsun;
+        color: #f30;
+      }
+
+      /* 超出容器尺寸的提示信息 */
+      .regist-remark {
+        visibility: hidden;
+        position: absolute;
+        margin-left: 10px;
+        color: #666;
+      }
+
+      .regist-input:focus + .regist-remark {
+        visibility: visible;
+      }
+
+      /* 邮箱报错 */
+      .regist-warn {
+        color: #be0000;
+      }
+
+      /* 注册按钮 */
+      .regist-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #bb0000;
+        color: #fff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="regist-box">
+      <div class="regist-group">
+        <label class="regist-label">
+          <span class="regist-star">*</span>
+          邮箱
+        </label>
+        <div class="regist-cell">
+          <input type="email" class="regist-input" />
+          <span class="regist-remark regist-warn"> 邮箱格式不正确 </span>
+        </div>
+      </div>
+      <div class="regist-group">
+        <label class="regist-label">
+          <span class="regist-star">*</span>
+          密码
+        </label>
+        <div class="regist-cell">
+          <input type="password" class="regist-input" />
+          <span class="regist-remark"> 请输入 6-16 位密码，不能使用空格 </span>
+        </div>
+      </div>
+      <div class="regist-group">
+        <label class="regist-label">手机号码</label>
+        <div class="regist-cell">
+          <input type="tel" class="regist-input" />
+        </div>
+      </div>
+      <div class="regist-group">
+        <i class="regist-label"></i>
+        <div class="regist-cell">
+          <a href="javascript:" class="regist-btn">立即注册</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

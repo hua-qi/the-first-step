@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>absolute 无依赖定位</title>
+    <style>
+      .l-t {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        background-color: rgba(255, 0, 0, 0.7);
+        /*
+        由于元素表现为“包裹性”，通过以下声明使其更改为“最大可用宽度”
+
+        相同现象亦见于包含块宽度小于文字宽度时，亦可通过相同声明进行更改
+         */
+        white-space: nowrap;
+      }
+
+      .container {
+        width: 200px;
+        height: 200px;
+        background-color: rgba(0, 0, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="l-t">left - top</div>
+    <div class="container"></div>
+  </body>
+</html>

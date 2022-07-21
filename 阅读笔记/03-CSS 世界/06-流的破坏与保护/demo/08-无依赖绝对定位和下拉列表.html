@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无依赖绝对定位和下拉列表</title>
+    <style>
+      .search-input {
+        width: 200px;
+        height: 20px;
+        line-height: 20px;
+        padding: 9px;
+        border: 1px solid #ddd;
+      }
+
+      /* 下拉列表的无依赖定位 */
+      .search-datalist {
+        position: absolute;
+        width: 200px;
+        border: 1px solid #e6e8e9;
+        background-color: #fff;
+        text-decoration: none;
+      }
+
+      .search-datalist a {
+        margin-top: 5px;
+        display: block;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* 搜索列表的显隐控制 */
+      .search-result {
+        visibility: hidden;
+      }
+
+      .search-input:focus ~ .search-result {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-box">
+      <input type="text" class="search-input" placeholder="搜索" />
+      <div class="search-result">
+        <div class="search-datalist">
+          <a href="">搜索结果1</a>
+          <a href="">搜索结果2</a>
+          <a href="">搜索结果3</a>
+          <a href="">搜索结果4</a>
+          <a href="">搜索结果5</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
