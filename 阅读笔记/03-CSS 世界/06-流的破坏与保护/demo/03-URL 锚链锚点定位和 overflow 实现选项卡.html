@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL 锚链锚点定位和 overflow 实现选项卡</title>
+    <style>
+      .box {
+        margin: auto;
+        width: 20em;
+        height: 10em;
+        border: 1px solid #ddd;
+        overflow: hidden;
+      }
+
+      .list {
+        line-height: 2em;
+        font-size: 5em;
+        color: #fff;
+        text-align: center;
+      }
+
+      #one {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+      #two {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      #three {
+        background-color: rgba(0, 0, 255, 0.5);
+      }
+
+      .link {
+        text-align: center;
+      }
+
+      .link a {
+        display: inline-block;
+        width: 3em;
+        line-height: 2em;
+        text-align: center;
+        text-decoration: none;
+        background-color: #ddd;
+        color: black;
+        border-radius: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <div class="list" id="one">1</div>
+        <div class="list" id="two">2</div>
+        <div class="list" id="three">3</div>
+      </div>
+      <div class="link">
+        <a href="#one" class="click">1</a>
+        <a href="#two" class="click">2</a>
+        <a href="#three" class="click">3</a>
+      </div>
+    </div>
+  </body>
+</html>

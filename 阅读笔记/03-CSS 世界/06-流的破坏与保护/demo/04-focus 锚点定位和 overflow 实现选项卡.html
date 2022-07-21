@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL 锚链锚点定位和 overflow 实现选项卡</title>
+    <style>
+      .box {
+        margin: auto;
+        width: 20em;
+        height: 10em;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        scroll-behavior: smooth;
+      }
+
+      .list {
+        line-height: 2em;
+        font-size: 5em;
+        color: #fff;
+        text-align: center;
+        position: relative;
+      }
+
+      .list > input {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 1px;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        clip: rect(0 0 0 0);
+      }
+
+      .list:nth-child(1) {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+
+      .list:nth-child(2) {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+
+      .list:nth-child(3) {
+        background-color: rgba(0, 0, 255, 0.5);
+      }
+
+      .link {
+        text-align: center;
+      }
+
+      .click {
+        display: inline-block;
+        width: 3em;
+        line-height: 2em;
+        text-align: center;
+        text-decoration: none;
+        background-color: #ddd;
+        color: black;
+        border-radius: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <div class="list">
+          <input id="one" readonly />
+          1
+        </div>
+        <div class="list">
+          <input id="two" readonly />
+          2
+        </div>
+        <div class="list">
+          <input id="three" readonly />
+          3
+        </div>
+      </div>
+      <div class="link">
+        <label for="one" class="click">1</label>
+        <label for="two" class="click">2</label>
+        <label for="three" class="click">3</label>
+      </div>
+    </div>
+  </body>
+</html>
