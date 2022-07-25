@@ -46,10 +46,11 @@
         position: relative;
         margin-left: 150px;
         margin-right: 200px;
+        height: 200px;
       }
 
       p {
-        float: left;
+        position: absolute;
       }
 
       .center {
@@ -59,7 +60,6 @@
       }
 
       .left {
-        position: absolute;
         width: 150px;
         height: 100px;
         margin-left: -150px;
@@ -67,18 +67,12 @@
       }
 
       .right {
-        position: absolute;
         width: 200px;
         height: 100px;
         margin-left: 100%;
         background-color: rgba(33, 33, 33, 0.6);
       }
 
-      .clearfix::after {
-        content: "";
-        display: block;
-        clear: both;
-      }
       /* ================================== */
 
       /* 双飞翼布局 */
