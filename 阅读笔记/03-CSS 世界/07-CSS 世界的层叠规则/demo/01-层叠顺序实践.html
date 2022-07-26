@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>层叠顺序实践</title>
+    <style>
+      .negative {
+        position: absolute;
+        z-index: -10;
+        width: 200px;
+        height: 200px;
+        background-color: rgb(10, 10, 0);
+      }
+
+      .block {
+        width: 180px;
+        height: 180px;
+        background-color: rgb(0, 0, 100);
+      }
+
+      .float {
+        float: left;
+        width: 160px;
+        height: 160px;
+        background-color: rgb(100, 0, 0);
+      }
+
+      .inline {
+        display: inline-block;
+        width: 140px;
+        height: 140px;
+        background-color: rgb(0, 100, 100);
+      }
+
+      .auto {
+        z-index: auto;
+        width: 120px;
+        height: 120px;
+        background-color: rgb(10, 0, 100);
+      }
+
+      .postive {
+        width: 100px;
+        height: 100px;
+        background-color: rgb(0, 100, 100);
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="negative"></div>
+    <div class="block"></div>
+    <div class="float"></div>
+    <span class="inline"></span>
+    <div class="auto"></div>
+    <div class="postive"></div>
+    <br />
+    <div class="negative">
+      <div class="block">
+        <div class="float">
+          <span class="inline">
+            <div class="auto">
+              <div class="postive"></div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
