@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>white-space 实现水平列表切换</title>
+    <style>
+      .box {
+        width: 300px;
+        height: 100px;
+        margin: 30px auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .box > ul {
+        position: absolute;
+        left: 0;
+        transition: left 0.2s;
+        white-space: nowrap;
+      }
+
+      .box > ul > li {
+        display: inline-block;
+      }
+
+      .box img {
+        width: 128px;
+        height: 96px;
+      }
+
+      .btn {
+        position: absolute;
+        font-size: 12px;
+        background: white;
+        padding: 2px 5px;
+        top: 40px;
+        opacity: 0.95;
+        color: #999;
+      }
+
+      .btn[href] {
+        color: #333;
+      }
+
+      .btn-prev {
+        left: 0;
+      }
+
+      .btn-next {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box" class="box">
+      <ul>
+        <li>
+          <img src="../images/06-响应式图标效果.png" alt="响应式图标效果" />
+        </li>
+        <li>
+          <img src="../images/06-响应式图标效果.png" alt="响应式图标效果" />
+        </li>
+        <li>
+          <img src="../images/06-响应式图标效果.png" alt="响应式图标效果" />
+        </li>
+      </ul>
+      <a id="prev" class="btn btn-prev">往前</a>
+      <a href="javascript:" id="next" class="btn btn-next">往后</a>
+    </div>
+
+    <script>
+      const eleBox = document.getElementById("box"),
+        eleUl = document.querySelector("ul"),
+        elePrev = document.getElementById("prev"),
+        eleNext = document.getElementById("next");
+
+      if (eleBox && eleUl && elePrev && eleNext) {
+        // maxX 可视窗口宽度 - 总滚动窗口宽度 = 未滚动窗口
+        const maxX = eleBox.clientWidth - eleBox.scrollWidth;
+
+        console.log(maxX);
+
+        elePrev.onclick = function () {
+          const href = elePrev.getAttribute("href");
+
+          if (href) {
+            eleUl.style.left = "0px";
+            elePrev.removeAttribute("href");
+            eleNext.setAttribute("href", "javascript:");
+          }
+        };
+
+        eleNext.onclick = function () {
+          const href = eleNext.getAttribute("href");
+
+          if (href) {
+            eleUl.style.left = maxX + "px";
+            eleNext.removeAttribute("href");
+            elePrev.setAttribute("href", "javascript:");
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
