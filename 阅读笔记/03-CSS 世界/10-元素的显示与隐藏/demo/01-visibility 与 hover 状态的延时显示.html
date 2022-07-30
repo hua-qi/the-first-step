@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>visibility 与 hover 状态的延时显示</title>
+    <style>
+      td a {
+        display: block;
+      }
+
+      .list {
+        width: 80px;
+        position: absolute;
+        visibility: hidden;
+        border: 1px solid #ccc;
+        background: #fff;
+      }
+
+      td:hover .list {
+        visibility: visible;
+        transition: visibility 0s 0.5s;
+      }
+
+      .list a {
+        padding: 5px 10px;
+        color: #333;
+      }
+
+      .list a:hover {
+        background-color: #f5f5f5;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>栏目1</td>
+        <td>栏目2</td>
+        <td>
+          <a href>操作</a>
+          <div class="list">
+            <a href>编辑</a>
+            <a href>删除</a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>栏目1</td>
+        <td>栏目2</td>
+        <td>
+          <a href>操作</a>
+          <div class="list">
+            <a href>编辑</a>
+            <a href>删除</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
