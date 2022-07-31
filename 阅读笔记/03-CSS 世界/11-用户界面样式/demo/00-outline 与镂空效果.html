@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>outline 与镂空效果</title>
+    <style>
+      .crop-box,
+      .preview-box {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .crop,
+      .preview {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .crop-area,
+      .preview {
+        width: 80px;
+        height: 80px;
+      }
+
+      .crop-area {
+        position: absolute;
+        left: 80px;
+        top: 56px;
+        outline: 256px solid rgba(0, 0, 0, 0.5);
+        cursor: move;
+      }
+
+      .crop img,
+      .preview img {
+        display: block;
+        width: 256px;
+        height: 192px;
+      }
+
+      .preview img {
+        position: absolute;
+        /* 初始位置与 crop-area 位置对应 */
+        left: -88px;
+        top: -56px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="crop-box">
+      <h4>剪裁（仅演示移动）</h4>
+      <div class="crop">
+        <div id="cropArea" class="crop-area"></div>
+        <img src="../images/01-剪裁预备图片.png" alt="剪裁预备图片" />
+      </div>
+    </div>
+    <div class="preview-box">
+      <h4>预览</h4>
+      <div class="preview">
+        <img
+          id="previewImg"
+          src="../images/01-剪裁预备图片.png"
+          alt="剪裁图片"
+        />
+      </div>
+    </div>
+
+    <script>
+      const elCropArea = document.getElementById("cropArea"),
+        elPreviewImg = document.getElementById("previewImg");
+
+      let data = {};
+
+      // 记录剪裁框初始位置
+      elCropArea.addEventListener("mousedown", function (event) {
+        data = {
+          moving: true,
+          left: elCropArea.offsetLeft,
+          top: elCropArea.offsetTop,
+          x: event.pageX,
+          y: event.pageY,
+        };
+      });
+
+      // 监听具体鼠标移动事件
+      document.addEventListener("mousemove", function (event) {
+        if (data.moving) {
+          event.preventDefault();
+          const { x, y, left: dataLeft, top: dataTop } = data;
+
+          // 移动距离
+          const moveX = event.pageX - x,
+            moveY = event.pageY - y;
+
+          // 目标坐标
+          let left = dataLeft + moveX,
+            top = dataTop + moveY;
+
+          // 边界判断
+          if (left < 0) {
+            left = 0;
+          } else if (left + 80 > 256) {
+            left = 176;
+          }
+
+          if (top < 0) {
+            top = 0;
+          } else if (top + 80 > 192) {
+            top = 112;
+          }
+
+          // 剪裁框和预览框重定位
+          /* elCropArea.style.left = left + "px";
+          elCropArea.style.top = top + "px"; */
+
+          elCropArea.style.cssText = `
+            left: ${left}px;
+            top: ${top}px;
+          `;
+
+          //   elPreviewImg.style.left = -left + "px";
+          //   elPreviewImg.style.top = -top + "px";
+
+          elPreviewImg.style.cssText = `
+            left: ${-left}px;
+            top: ${-top}px;
+          `;
+        }
+      });
+
+      document.addEventListener("mouseup", function () {
+        data.moving = false;
+      });
+    </script>
+  </body>
+</html>
