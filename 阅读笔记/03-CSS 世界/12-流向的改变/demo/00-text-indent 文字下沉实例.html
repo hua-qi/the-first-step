@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>text-indent 文字下沉实例</title>
+    <style>
+      .btn {
+        display: inline-block;
+        color: #a78252;
+        background-color: #ddc390;
+        width: 85px;
+        height: 85px;
+        line-height: 85px;
+        border: 6px solid #ddc390;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 1px #d6b681, 0 1px, 0 2px, 0 3px, 0 4px;
+        text-align: center;
+        transition: border-color 0.25s, background-color 0.25s;
+        font-size: 42px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .btn:active {
+        text-indent: 2px;
+      }
+
+      .vertical-mode {
+        writing-mode: vertical-rl;
+      }
+    </style>
+  </head>
+  <body>
+    <p>恭喜你中了 88 元红包！</p>
+    <a href="javascript:" class="btn vertical-mode">领</a>
+  </body>
+</html>
