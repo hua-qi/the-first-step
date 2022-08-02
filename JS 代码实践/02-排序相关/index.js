@@ -74,6 +74,30 @@ const mergeSort = arr => {
   return merge(mergeSort(left), mergeSort(right));
 };
 
+// 快速排序
+const quickSort = arr => {
+  const len = arr.length;
+
+  if (len < 2) {
+    return arr;
+  }
+
+  const midIndex = len >> 1,
+    midItem = arr.splice(midIndex, 1),
+    left = [],
+    right = [];
+
+  for (const item of arr) {
+    if (item <= midItem) {
+      left.push(item);
+    } else {
+      right.push(item);
+    }
+  }
+
+  return quickSort(left).concat(midItem).concat(quickSort(right));
+};
+
 const originList = [2, 3, 4, 1, 3, 9, 6, 8, 0];
 
 // 冒泡排序
@@ -85,5 +109,9 @@ const originList = [2, 3, 4, 1, 3, 9, 6, 8, 0];
 // console.log(originList);
 
 // 归并排序
-const sortedList = mergeSort(originList);
+// const sortedList = mergeSort(originList);
+
+// 快速排序
+const sortedList = quickSort(originList);
+
 console.log(sortedList);
