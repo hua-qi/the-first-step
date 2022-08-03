@@ -39,6 +39,7 @@ const insertSort = arr => {
 // 归并排序
 const merge = (left, right) => {
   let result = [];
+
   while (left.length && right.length) {
     if (left[0] <= right[0]) {
       result.push(left.shift());

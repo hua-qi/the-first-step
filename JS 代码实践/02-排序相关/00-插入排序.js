@@ -1,20 +1,23 @@
-function insertion_sort(new_arr) {
-  for (let index = 1; index < new_arr.length; ++index) {
-    let cur = new_arr[index];
-    for (var indey = index - 1; indey >= 0; --indey) {
-      let temp = new_arr[indey];
+const insertSort = arr => {
+  const len = arr.length;
+  let curItem, preIndex;
 
-      if (temp > cur) {
-        new_arr[indey + 1] = temp;
-      } else {
-        break;
-      }
+  for (let index = 1; index < len; index++) {
+    curItem = arr[index];
+    preIndex = index - 1;
+
+    while (preIndex >= 0 && curItem < arr[preIndex]) {
+      // 大于 curItem 则向后移动一位
+      arr[preIndex + 1] = arr[preIndex];
+      preIndex--;
     }
-    new_arr[indey + 1] = cur;
+
+    arr[preIndex + 1] = curItem;
   }
-  return new_arr;
-}
+
+  return arr;
+};
 
 let arr = [6, 5, 4, 3, 2, 1];
-let sort_arr = insertion_sort(arr);
+let sort_arr = insertSort(arr);
 console.log(sort_arr);
