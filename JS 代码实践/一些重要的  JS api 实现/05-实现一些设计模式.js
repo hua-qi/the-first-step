@@ -17,3 +17,21 @@ function proxy(func) {
 
   return new Proxy(func, handler);
 }
+
+/* 
+对象方式
+ */
+
+function singleFunc() {}
+
+const single = {
+  unique: null,
+  getInstance: function () {
+    if (!this.unique) {
+      this.unique = new singleFunc();
+    }
+    return this.unique;
+  },
+};
+
+Object.freeze(single);

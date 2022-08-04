@@ -31,7 +31,7 @@ Function.prototype.bind = function (context = globalThis, ...args) {
 
     return self.apply(
       this instanceof fBound ? this : context || window,
-      args.concat(Array.prototype.slice(arguments))
+      args.concat([...arguments])
     );
   };
 

@@ -108,3 +108,9 @@ console.log(person01);
 person01.firends.push("flower");
 let person02 = createObj(person);
 console.log(person02);
+
+// 5. 通用继承
+function inherit(child, father) {
+  child.prototype = Object.create(father.prototype);
+  child.prototype.constructor = child;
+}
