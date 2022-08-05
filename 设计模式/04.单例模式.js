@@ -23,3 +23,19 @@ SingleCat.getInstance = function () {
     return instance;
   };
 };
+
+// 对象实现
+function SingleBird() {}
+
+const single = {
+  instance: null,
+  getInstance: function () {
+    if (!this.instance) {
+      this.instance = new SingleBird();
+    }
+
+    return this.instance;
+  },
+};
+
+Object.freeze(single);
