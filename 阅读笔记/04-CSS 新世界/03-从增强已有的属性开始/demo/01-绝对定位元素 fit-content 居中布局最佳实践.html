@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>绝对定位元素 fit-content 居中布局最佳实践</title>
+    <style>
+      .cw-dialog:not([open]) {
+        display: none;
+      }
+
+      .cw-dialog {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: fit-content;
+        height: fit-content;
+        margin: auto;
+        animation: tinyUp 0.4s both;
+      }
+
+      @keyframes tinyUp {
+        from {
+          transform: translateY(20px);
+        }
+
+        to {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="button">点击出现弹框</button>
+
+    <div id="dialog" class="cw-dialog">
+      <img
+        src="../images/00-绝对定位元素居中显示.png"
+        width="300"
+        height="225"
+      />
+    </div>
+
+    <script>
+      const dialog = document.getElementById("dialog");
+
+      document.addEventListener("click", function (event) {
+        if (event.target && event.target.id === "button") {
+          dialog.setAttribute("open", "");
+        } else {
+          dialog.removeAttribute("open");
+        }
+      });
+    </script>
+  </body>
+</html>
