@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>圆角渐变边框</title>
+    <style>
+      .border-gradient {
+        padding: 30px;
+        border-style: solid;
+        border-image: linear-gradient(deepskyblue, deeppink) 20 / 10px;
+      }
+
+      .father {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .clip-path {
+        clip-path: inset(0 round 10px);
+      }
+    </style>
+  </head>
+  <body>
+    <h4>1. 父元素圆角</h4>
+    <div class="father">
+      <div class="border-gradient">圆角渐变边框</div>
+    </div>
+    <h4>2. clip-path 剪裁</h4>
+    <div class="border-gradient clip-path">圆角渐变边框</div>
+  </body>
+</html>
