@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>黏性定位实现</title>
+    <style>
+      nav {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        position: sticky;
+        top: 0;
+      }
+
+      nav h3 {
+        display: table-cell;
+        outline: 1px solid #fff;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+      }
+
+      .stretch {
+        width: 2em;
+        width: min-content;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h3>导航A</h3>
+      <h3>导航B</h3>
+      <h3>导航C</h3>
+    </nav>
+    <p class="stretch">
+      我是一段文字，我没什么用，就是用来撑开高度用的，这样页面就会出现滚动条，就可以测试上面黑色的导航元素是否有粘性效果了。我是一段文字，我没什么用，就是用来撑开高度用的，这样页面就会出现滚动条，就可以测试上面黑色的导航元素是否有粘性效果了。
+    </p>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>黏性定位与层次滚动效果实现</title>
+    <style>
+      article {
+        position: relative;
+        z-index: 0;
+      }
+
+      article h4,
+      article footer {
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+      }
+
+      article h4 {
+        margin: 1em 0 0;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        top: 0;
+        z-index: 1;
+      }
+
+      article content {
+        display: block;
+        background-color: #cd0000;
+        position: relative;
+        padding: 5px 10px;
+      }
+
+      article footer {
+        background-color: #cd0000;
+        color: #fff;
+        padding: 10px;
+        bottom: 50vh;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <section>
+        <h4>新闻标题1</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+          <p>新闻内容第3段。</p>
+          <p>新闻内容第4段。</p>
+        </content>
+        <footer>网友评论：这个新闻太夸张了吧！</footer>
+      </section>
+      <section>
+        <h4>新闻标题2</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+          <p>新闻内容第3段。</p>
+          <p>新闻内容第4段。</p>
+        </content>
+        <footer>网友评论：感动</footer>
+      </section>
+      <section>
+        <h4>新闻标题3</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+        </content>
+        <footer>网友评论：比心</footer>
+      </section>
+      <section>
+        <h4>新闻标题4</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+        </content>
+        <footer>网友评论：赞赞赞</footer>
+      </section>
+      <section>
+        <h4>新闻标题5</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+        </content>
+        <footer>网友评论：666</footer>
+      </section>
+      <section>
+        <h4>新闻标题6</h4>
+        <content>
+          <p>新闻内容第1段。</p>
+          <p>新闻内容第2段。</p>
+        </content>
+        <footer>网友评论：好耶！</footer>
+      </section>
+    </article>
+  </body>
+</html>
