@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VUE2 介绍</title>
+    <!-- 引入 CDN vue@2 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <!-- Object.freeze() 使用 -->
+    <div id="app">
+      <p>{{foo}}</p>
+      <!-- 这里的 'foo' 不会更新 -->
+      <button v-on:click="foo = 'baz'">Change it</button>
+    </div>
+
+    <!-- -----------------------------
+      Vue 实例自身暴露 property 与 方法 
+    -->
+    <div id="example">
+      <button v-on:click="a = a + 1">Change a</button>
+    </div>
+
+    <script>
+      // Object.freeze() 使用
+      const obj = {
+        foo: "bar",
+      };
+
+      Object.freeze(obj);
+
+      const vm = new Vue({
+        el: "#app",
+        data: obj,
+      });
+
+      console.log(vm.foo === obj.foo);
+
+      // Vue 实例自身属性和方法使用
+      const data = {
+        a: 1,
+      };
+      const vm1 = new Vue({
+        el: "#example",
+        data,
+      });
+
+      console.log(vm1.$data === data);
+      console.log(vm1.$el === document.getElementById("example"));
+
+      vm1.$watch("a", function (newValue, oldValue) {
+        console.log(`newValue: ${newValue}; oldValue: ${oldValue}`);
+      });
+    </script>
+  </body>
+</html>
