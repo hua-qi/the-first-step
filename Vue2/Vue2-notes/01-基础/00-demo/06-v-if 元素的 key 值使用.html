@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-if 元素的 key 值使用</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+      .app {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app button {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <!-- 切换时默认复用两个模板的相同元素 -->
+      <h4>复用相同元素</h4>
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input type="text" placeholder="Enter your username" />
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input type="text" placeholder="Enter your email address" />
+      </template>
+
+      <!-- 声明唯一 key，相同元素重新渲染 -->
+      <h4>相同元素重新渲染</h4>
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input type="text" key="username" placeholder="Enter your username" />
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input type="text" key="email" placeholder="Enter your email address" />
+      </template>
+
+      <button @click="toggleLoginType()">Toggle login type</button>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          loginType: "username",
+        },
+        methods: {
+          toggleLoginType: function () {
+            if (this.loginType === "username") {
+              this.loginType = "email";
+            } else {
+              this.loginType = "username";
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
