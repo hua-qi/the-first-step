@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>列表渲染-v-for 遍历</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- v-for 遍历 object -->
+      <h4>v-for 遍历 object</h4>
+      <ul class="demo">
+        <li v-for="(value, name, index) in object">
+          {{index}} . {{name}} : {{value}}
+        </li>
+      </ul>
+
+      <!-- v-for 遍历 map -->
+      <h4>v-for 遍历 map</h4>
+      <ul class="demo">
+        <li v-for="(value, name, index) in map">
+          {{index}} . {{name}} : {{value}}
+        </li>
+      </ul>
+
+      <!-- v-for 遍历 set -->
+      <h4>v-for 遍历 set</h4>
+      <ul class="demo">
+        <li v-for="(value, name, index) in set">
+          {{index}} . {{name}} : {{value}}
+        </li>
+      </ul>
+
+      <!-- v-fot 遍历 array -->
+      <h4>v-for 遍历 array</h4>
+      <ul class="demo">
+        <li v-for="(item, index) in array">{{index}} - {{item.message}}</li>
+      </ul>
+
+      <!-- v-for 遍历类数组对象 -->
+      <h4>v-for 遍历类数组对象</h4>
+      <ul class="demo">
+        <li v-for="(item, index) in lis">{{index}} - {{item.localName}}</li>
+      </ul>
+    </div>
+
+    <script>
+      const mySet = new Set();
+      mySet.add("title");
+      mySet.add("author");
+      mySet.add("publishedAt");
+
+      const myMap = new Map();
+      myMap.set("title", "How to do list in Vue");
+      myMap.set("author", "Jane Doe");
+      myMap.set("publishedAt", "2016-04-10");
+
+      const lis = document.getElementsByTagName("li");
+      console.log(lis);
+      new Vue({
+        el: "#app",
+        data: {
+          map: myMap,
+          set: mySet,
+          object: {
+            title: "How to do lists in Vue",
+            author: "Jane Doe",
+            publishedAt: "2016-04-10",
+            publishedAt: "2016-04-10",
+          },
+          array: [
+            { message: "Foo" },
+            { message: "Bar" },
+            { message: "Baz" },
+            { message: "Fun" },
+          ],
+          lis: lis,
+        },
+      });
+    </script>
+  </body>
+</html>

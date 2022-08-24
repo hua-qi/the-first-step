@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>列表渲染-todo 列表</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <div id="todo-list-example">
+      <form v-on:submit.prevent="addNewTodo">
+        <label for="new-todo">Add a todo</label>
+        <!-- v-model 双向绑定 -->
+        <input
+          type="text"
+          id="new-todo"
+          v-model="newTodoText"
+          placeholder="E.g. Feed the cat"
+        />
+      </form>
+      <ul>
+        <!-- 
+            将外部数据传入组件：
+            v-bind:key="todo.id"
+            v-bind:title="todo.title"
+            监听组件内部事件（父子通信，子传父）：
+            v-on:remove
+         -->
+        <li
+          is="todo-item"
+          v-for="(todo,index) in todos"
+          v-bind:key="todo.id"
+          v-bind:title="todo.title"
+          v-on:remove="todos.splice(index, 1)"
+        ></li>
+      </ul>
+    </div>
+
+    <script>
+      Vue.component("todo-item", {
+        template: `
+            <li>
+                {{ title }}
+                <button v-on:click="$emit('remove')">Remove</button>
+            </li>
+            `,
+        props: ["title"],
+      });
+
+      new Vue({
+        el: "#todo-list-example",
+        data: {
+          newTodoText: "",
+          todos: [
+            {
+              id: 1,
+              title: "Do the dishes",
+            },
+            {
+              id: 2,
+              title: "Take out the trash",
+            },
+            {
+              id: 3,
+              title: "Mow the lawn",
+            },
+          ],
+          nextTodoId: 4,
+        },
+
+        methods: {
+          addNewTodo: function () {
+            this.todos.push({
+              id: this.nextTodoId++,
+              title: this.newTodoText,
+            });
+            this.newTodoText = "";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
