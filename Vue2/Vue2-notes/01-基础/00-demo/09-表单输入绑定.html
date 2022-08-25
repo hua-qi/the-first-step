@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>表单输入绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+      section {
+        margin: 10px 0;
+        border-bottom: solid rgba(200, 0, 0, 0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 文本 -->
+      <section>
+        <h4>文本</h4>
+        <input type="text" v-model="message" placeholder="edit me" />
+        <p>Message is: {{ message }}</p>
+      </section>
+
+      <!-- 多行文本 -->
+      <section>
+        <h4>多行文本</h4>
+        <span>Multiline message is: </span>
+        <p style="white-space: pre-line">{{ message }}</p>
+        <br />
+        <textarea
+          v-model="multiMessage"
+          placeholder="add multiple lines"
+        ></textarea>
+      </section>
+
+      <!-- 复选框 -->
+      <section>
+        <h4>单个复选框</h4>
+        <input type="checkbox" id="checkbox" v-model="checked" />
+        <label for="checkbox">{{ checked }}</label>
+        <h4>多个复选框</h4>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+        <label for="mike">Mike</label>
+        <br />
+        <span>Checked names: {{ checkedNames }}</span>
+      </section>
+
+      <!-- 单选按钮 -->
+      <section>
+        <input type="radio" id="one" value="One" v-model="picked" />
+        <label for="one">One</label>
+        <br />
+        <input type="radio" id="two" value="Two" v-model="picked" />
+        <label for="two">Two</label>
+        <br />
+        <span>Picked: {{ picked }}</span>
+      </section>
+
+      <!-- 选择框 -->
+      <section>
+        <h4>单选选择框</h4>
+        <select v-model="selected">
+          <option disabled value="">请选择</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <br />
+        <span>Selected: {{ selected }}</span>
+        <h4>多选选择框</h4>
+        <select v-model="multiSelected" multiple style="width: 50px">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <br />
+        <span>Selected: {{ multiSelected }}</span>
+        <h4>v-for 渲染动态选项</h4>
+        <select v-model="dynamicSelected">
+          <option v-for="option in options" v-bind:value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+        <br />
+        <span> Selected: {{ dynamicSelected }} </span>
+      </section>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          message: "",
+          multiMessage: "",
+          checked: false,
+          checkedNames: [],
+          picked: "One",
+          selected: "",
+          multiSelected: [],
+          dynamicSelected: "A",
+          options: [
+            {
+              text: "One",
+              value: "A",
+            },
+            {
+              text: "Two",
+              value: "B",
+            },
+            {
+              text: "Three",
+              value: "C",
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
