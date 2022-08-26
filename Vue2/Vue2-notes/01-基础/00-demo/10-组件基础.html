@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>组件基础</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <!--  组件的定义与使用 -->
+    <div id="components-start">
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+    </div>
+
+    <hr />
+
+    <!-- 组件的 props  -->
+    <div id="blog-post-demo">
+      <blog-post
+        v-for="post in posts"
+        v-bind:key="post.id"
+        v-bind:title="post.title"
+      ></blog-post>
+    </div>
+
+    <hr />
+
+    <!-- 监听子组件事件 -->
+    <div id="blog-posts-events-demo">
+      <div :style="{ fontSize: postFontSize + 'em', color: color }">
+        <blog-post-v2
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          @enlarge-text="onEnlargeText"
+          @change-color="color16"
+        ></blog-post-v2>
+      </div>
+    </div>
+
+    <script>
+      // 组件的定义与使用
+      // 先定义组件
+      Vue.component("button-counter", {
+        data: function () {
+          return {
+            count: 0,
+          };
+        },
+        template: `
+                  <button v-on:click="count++">You clicked me {{ count }} times.</button>
+              `,
+      });
+
+      // 再在 Vue 实例中使用
+      new Vue({
+        el: "#components-start",
+      });
+
+      // ================================================
+
+      // 组件的 props
+      Vue.component("blog-post", {
+        props: ["title"],
+        template: `
+                  <h3>{{ title }}</h3>
+              `,
+      });
+
+      new Vue({
+        el: "#blog-post-demo",
+        data: {
+          posts: [
+            {
+              id: 1,
+              title: "My journey with Vue",
+            },
+            {
+              id: 2,
+              title: "Blogging with Vue",
+            },
+            {
+              id: 3,
+              title: "Why Vue is so fun",
+            },
+          ],
+        },
+      });
+
+      // ============================================
+      // 监听子组件事件
+      Vue.component("blog-post-v2", {
+        props: ["post"],
+        template: `
+                  <div class="blog-post-v2">
+                      <h3>{{ post.title }}</h3>
+                      <!-- 使用事件抛出值 -->
+                      <button
+                        @click="$emit('enlarge-text', 0.1)"
+                        @click.right.prevent="$emit('change-color')"
+                        >
+                          Enlarge text
+                      </button>
+                      <div v-html="post.content"></div>
+                  </div>
+              `,
+      });
+
+      new Vue({
+        el: "#blog-posts-events-demo",
+        data: {
+          postFontSize: 1,
+          color: "#000",
+          posts: [
+            {
+              id: 1,
+              title: "My journey with Vue",
+              content: "...content....",
+            },
+            {
+              id: 2,
+              title: "Blogging with Vue",
+              content: "...content....",
+            },
+            {
+              id: 3,
+              title: "Why Vue is so fun",
+              content: "...content....",
+            },
+          ],
+        },
+        methods: {
+          onEnlargeText: function (enlargAmount) {
+            this.postFontSize += enlargAmount;
+          },
+
+          color16: function () {
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            this.color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
