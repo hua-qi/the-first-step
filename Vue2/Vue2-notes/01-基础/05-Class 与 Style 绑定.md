@@ -162,7 +162,7 @@ active 会被自动解析为 String 类型；
 
 ### 内联样式的对象语法
 
-v-bind:style 的对象语法作为一个 JavaScript 对象，与 CSS 样式书写格式很相似。但需要将短横线分割格式的 CSS 属性名更改为驼峰式属性名写法（font-size -> fontSzie）。
+v-bind:style 的对象语法作为一个 JavaScript 对象，与 CSS 样式书写格式很相似。CSS property 名可以用驼峰式（camelCase）或短横线分割（kebab-case，需要用引号括起来）命名。
 
 ```html
 <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
