@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 300px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+
+      .msg {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        overflow: hidden;
+      }
+
+      @keyframes wordsLoop {
+        from {
+          transform: translateX(0px);
+        }
+
+        to {
+          transform: translateX(-100%);
+        }
+      }
+      .scroll span {
+        position: absolute;
+        white-space: nowrap;
+        left: 0;
+        animation: wordsLoop 4s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="type">span</div>
+      <div class="time">huaqi</div>
+      <div class="msg">
+        <span>shdadhadhahdahdhhdsahdhashdhash</span>
+      </div>
+    </div>
+
+    <script>
+      const msgEl = document.getElementsByClassName("msg")[0];
+      console.log(msgEl);
+      const { clientWidth, scrollWidth, scrollLeft } = msgEl;
+      console.log(clientWidth);
+      console.log(scrollWidth);
+      console.log(scrollLeft);
+
+      if (scrollWidth > clientWidth) {
+        msgEl.classList.add("scroll");
+      }
+    </script>
+  </body>
+</html>
