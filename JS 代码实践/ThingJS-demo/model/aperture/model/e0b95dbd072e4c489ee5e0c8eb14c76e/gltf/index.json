@@ -1,0 +1,28 @@
+{
+  "sourceFile": "D:\\convertModels\\work\\e0b95dbd072e4c489ee5e0c8eb14c76e_999_转换中\\MAX\\21000光波圈条.maxbk0.max",
+  "gltfFiles": [
+    "F1O4UPDSIQW1CZ01QJWSGUPICA0SMTPIX.gltf"
+  ],
+  "texFiles": {
+    "Q00DG9JQIF6VC78VI8715Q125OP7IQTW2": ".bin",
+    "OZID8ZOOE4UMJD6ITUY7PFJ6EFZKO1P24": "粗细白条_f_png.jpg",
+    "E47TQZVRE185886XDEWC2A86M3JK4HUVO": "粗细白条.png"
+  },
+  "size": [
+    0.985317,
+    0.985317,
+    0.001
+  ],
+  "faces": 36,
+  "verts": 37,
+  "nodes": 1,
+  "createTime": "2022-09-01 10:04:06",
+  "author": "1854",
+  "computer": "CHR-221",
+  "max": "#(22000, 55, 0, 22, 0, 0, 757, 2020, \"\")",
+  "version": "2.1",
+  "extensionsFile": "extensions.ext",
+  "anim": [
+    "_defaultAnim_"
+  ]
+}

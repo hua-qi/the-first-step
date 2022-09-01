@@ -1,0 +1,26 @@
+{
+  "sourceFile": "D:\\convertModels\\work\\3837491689e5474aa7107b96e88266dc_999_转换中\\MAX\\21000跑道.maxbk0.max",
+  "gltfFiles": [
+    "1486U4E7W6EA6QCOP8TE0I59ZS2ATK2Q6.gltf"
+  ],
+  "texFiles": {
+    "VPA1CY916P7H1U2A2WPWZKGQWNP32N43T": ".bin"
+  },
+  "size": [
+    0.285581,
+    0.54169,
+    0.018087
+  ],
+  "faces": 216,
+  "verts": 144,
+  "nodes": 18,
+  "createTime": "2022-08-31 13:20:30",
+  "author": "1854",
+  "computer": "BJ-226",
+  "max": "#(22000, 55, 0, 22, 0, 0, 757, 2020, \"\")",
+  "version": "2.1",
+  "extensionsFile": "extensions.ext",
+  "anim": [
+    "_defaultAnim_"
+  ]
+}
