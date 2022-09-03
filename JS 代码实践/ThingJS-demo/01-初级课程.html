@@ -1,185 +1,188 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>初级课程 demo</title>
-        <script src="./scource/thingjs.min-V1.2.7.7.js"></script>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
 
-            /* 交互布局 */
-            .interface {
-                position: absolute;
-                top: 10px;
-                width: 100px;
-                height: 120px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                z-index: 1;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>初级课程 demo</title>
+    <script src="./scource/thingjs.min-V1.2.7.7.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-            .interface .button {
-                text-align: center;
-                width: 80px;
-                height: 30px;
-                line-height: 30px;
-                background-color: #fff;
-                cursor: pointer;
-                border-radius: 10px;
-            }
+        /* 交互布局 */
+        .interface {
+            position: absolute;
+            top: 10px;
+            width: 100px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1;
+        }
 
-            .interface .button:hover {
-                background-color: #02172f;
-                color: white;
-            }
+        .interface .button {
+            text-align: center;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 10px;
+        }
 
-            .interface .button:active {
-                line-height: 32px;
-            }
+        .interface .button:hover {
+            background-color: #02172f;
+            color: white;
+        }
 
-            /* marker 布局 */
-            .marker {
-                position: absolute;
-            }
+        .interface .button:active {
+            line-height: 32px;
+        }
 
-            .text {
-                color: #ff0000;
-                font-size: 12px;
-                text-shadow: white 0px 2px, white 2px 0px, white -2px 0px,
-                    white 0px -2px, white -1.4px -1.4px, white 1.4px 1.4px,
-                    white 1.4px -1.4px, white -1.4px 1.4px;
-                margin-bottom: 5px;
-                text-align: center;
-            }
+        /* marker 布局 */
+        .marker {
+            position: absolute;
+        }
 
-            .tag {
-                height: 30px;
-                width: 30px;
-                text-align: center;
-                color: red;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- 页面交互 -->
-        <div class="interface">
-            <div class="button" onclick="createRain()">下雨</div>
-            <div class="button" onclick="createSnow()">下雪</div>
-            <div class="button" onclick="resetAllParticle()">清空</div>
+        .text {
+            color: #ff0000;
+            font-size: 12px;
+            text-shadow: white 0px 2px, white 2px 0px, white -2px 0px,
+                white 0px -2px, white -1.4px -1.4px, white 1.4px 1.4px,
+                white 1.4px -1.4px, white -1.4px 1.4px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .tag {
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 页面交互 -->
+    <div class="interface">
+        <div class="button" onclick="createRain()">下雨</div>
+        <div class="button" onclick="createSnow()">下雪</div>
+        <div class="button" onclick="resetAllParticle()">清空</div>
+    </div>
+    <!-- 容器元素 -->
+    <div id="3d">
+        <!-- 模板元素 -->
+        <div id="board" class="marker">
+            <div class="text"></div>
+            <div class="tag">⬇</div>
         </div>
-        <!-- 容器元素 -->
-        <div id="3d">
-            <!-- 模板元素 -->
-            <div id="board" class="marker">
-                <div class="text"></div>
-                <div class="tag">⬇</div>
-            </div>
-        </div>
+    </div>
 
-        <script>
-            // 初始化用于接收园区对象
-            let campus = null;
+    <script>
+        // 初始化用于接收园区对象
+        let campus = null;
 
-            // 场景加载
-            const app = new THING.App({
-                container: '3d',
-                url: 'https://www.thingjs.com/static/models/storehouse',
-                skyBox: 'Night',
+        // 场景加载
+        const app = new THING.App({
+            container: '3d',
+            url: 'https://www.thingjs.com/static/models/storehouse',
+            skyBox: 'Night',
+        });
+
+        // app 监听 onload 事件
+        app.on('load', function (ev) {
+            // 获取园区对象
+            campus = app.query('.Campus')[0];
+            // 获取园区下的所有建筑
+            let buildings = campus.buildings;
+
+            // 为所有建筑创建标注
+            buildings.forEach(item => {
+                // 创建标注
+                const ui = app.create({
+                    type: 'UIAnchor',
+                    parent: item,
+                    element: createElement(item.id),
+                    localPosition: [0, 1, 0],
+                    pivot: [0.5, 1],
+                });
+
+                // 设置名称
+                const itemEl = document.getElementById(item.id);
+                itemEl.childNodes[1].innerText = item.name;
             });
+        });
 
-            // app 监听 onload 事件
-            app.on('load', function (ev) {
-                // 获取园区对象
-                campus = app.query('.Campus')[0];
-                // 获取园区下的所有建筑
-                let buildings = campus.buildings;
+        // 创建元素
+        function createElement(id) {
+            const srcEle = document.getElementById('board');
+            const newEle = srcEle.cloneNode(true);
+            newEle.style.display = 'block';
+            newEle.setAttribute('id', id);
+            app.domElement.insertBefore(newEle, srcEle);
+            return newEle;
+        }
 
-                // 为所有建筑创建标注
-                buildings.forEach(item => {
-                    // 创建标注
-                    const ui = app.create({
-                        type: 'UIAnchor',
-                        parent: item,
-                        element: createElement(item.id),
-                        localPosition: [0, 1, 0],
-                        pivot: [0.5, 1],
-                    });
+        // 粒子效果
+        let particleRain = null;
+        let particleSnow = null;
 
-                    // 设置名称
-                    const itemEl = document.getElementById(item.id);
-                    itemEl.childNodes[1].innerText = item.name;
-                });
+        function createRain() {
+            // 存在bug 稍后优化
+            if (particleRain) {
+                return;
+            }
+
+            resetAllParticle();
+
+            particleRain = app.create({
+                type: 'ParticleSystem',
+                name: 'Rain',
+                url: 'https://model.3dmomoda.com/models/18112113d4jcj4xcoyxecxehf3zodmvp/0/particles',
+                position: [0, 300, 0],
+                complete: function (ev) {
+                    ev.object.scale = [10, 10, 10];
+                },
             });
+            // 设置粒子最大密度
+            particleRain.setGroupAttribute('maxParticleCount', 1000);
+            // 设置粒子最小密度
+            particleRain.setParticleAttribute('particleCount', 500);
+        }
 
-            // 创建元素
-            function createElement(id) {
-                const srcEle = document.getElementById('board');
-                const newEle = srcEle.cloneNode(true);
-                newEle.style.display = 'block';
-                newEle.setAttribute('id', id);
-                app.domElement.insertBefore(newEle, srcEle);
-                return newEle;
+        function createSnow() {
+            if (particleSnow) {
+                return;
             }
 
-            // 粒子效果
-            let particleRain = null;
-            let particleSnow = null;
+            resetAllParticle();
 
-            function createRain() {
-                // 存在bug 稍后优化
-                if (particleRain) {
-                    return;
-                }
+            particleSnow = app.create({
+                type: 'ParticleSystem',
+                id: 'No1234567',
+                name: 'Snow',
+                url: 'https://model.3dmomoda.com/models/18112014q3t8aunaabahzxbxcochavap/0/particles',
+                position: [0, 50, 0],
+            });
+        }
 
-                resetAllParticle();
+        // 重置粒子效果
+        function resetAllParticle() {
+            // 获取当前例子效果
+            const particle = app.query('.ParticleSystem');
 
-                particleRain = app.create({
-                    type: 'ParticleSystem',
-                    name: 'Rain',
-                    url: 'https://model.3dmomoda.com/models/18112113d4jcj4xcoyxecxehf3zodmvp/0/particles',
-                    position: [0, 300, 0],
-                    complete: function (ev) {
-                        ev.object.scale = [10, 10, 10];
-                    },
-                });
-                // 设置粒子最大密度
-                particleRain.setGroupAttribute('maxParticleCount', 1000);
-                // 设置粒子最小密度
-                particleRain.setParticleAttribute('particleCount', 500);
+            if (particle) {
+                particle.destroyAll();
             }
+        }
+    </script>
+</body>
 
-            function createSnow() {
-                if (particleSnow) {
-                    return;
-                }
-
-                resetAllParticle();
-
-                particleSnow = app.create({
-                    type: 'ParticleSystem',
-                    id: 'No1234567',
-                    name: 'Snow',
-                    url: 'https://model.3dmomoda.com/models/18112014q3t8aunaabahzxbxcochavap/0/particles',
-                    position: [0, 50, 0],
-                });
-            }
-
-            // 重置粒子效果
-            function resetAllParticle() {
-                // 获取当前例子效果
-                const particle = app.query('.ParticleSystem');
-
-                if (particle) {
-                    particle.destroyAll();
-                }
-            }
-        </script>
-    </body>
 </html>

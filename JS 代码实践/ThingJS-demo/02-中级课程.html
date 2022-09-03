@@ -1,207 +1,210 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>中级课程 demo</title>
-        <script src="./scource/thingjs.min-V1.2.7.7.js"></script>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
 
-            .btn-box {
-                position: absolute;
-                width: 150px;
-                height: 50px;
-                z-index: 1;
-                background-color: #fff;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-around;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>中级课程 demo</title>
+    <script src="./scource/thingjs.min-V1.2.7.7.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-            .btn-box button {
-                background-color: #021832;
-                color: #fff;
-                padding: 5px;
-                border-radius: 3px;
-            }
+        .btn-box {
+            position: absolute;
+            width: 150px;
+            height: 50px;
+            z-index: 1;
+            background-color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
 
-            .btn-box button:hover {
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="btn-box">
-            <button onclick="peopleForward()">前进</button>
-            <button onclick="peopleBack()">原路返回</button>
-        </div>
-        <div id="container"></div>
-        <script>
-            // 创建
-            const app = new THING.App({
-                container: 'container',
-                url: 'https://www.thingjs.com/static/models/storehouse',
-                skyBox: 'Night',
+        .btn-box button {
+            background-color: #021832;
+            color: #fff;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .btn-box button:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn-box">
+        <button onclick="peopleForward()">前进</button>
+        <button onclick="peopleBack()">原路返回</button>
+    </div>
+    <div id="container"></div>
+    <script>
+        // 创建
+        const app = new THING.App({
+            container: 'container',
+            url: 'https://www.thingjs.com/static/models/storehouse',
+            skyBox: 'Night',
+        });
+
+        let cabinet = null,
+            line = null,
+            pathPoint = null,
+            people = null;
+
+        app.on('load', function (ev) {
+            // 创建机柜
+            cabinet = app.create({
+                type: 'Thing',
+                url: 'https://www.thingjs.com/static/models/cabinets/47f34ce2c5a14b6d8fd4e80974394a55',
+                id: '4321',
+                name: 'cabinet',
+                position: [-24.976, 0.01, -14.646],
             });
 
-            let cabinet = null,
-                line = null,
-                pathPoint = null,
-                people = null;
+            // 机柜视角
+            cabinet.lookAt([-23.976, 3.05, -16.646]);
 
-            app.on('load', function (ev) {
-                // 创建机柜
-                cabinet = app.create({
-                    type: 'Thing',
-                    url: 'https://www.thingjs.com/static/models/cabinets/47f34ce2c5a14b6d8fd4e80974394a55',
-                    id: '4321',
-                    name: 'cabinet',
-                    position: [-24.976, 0.01, -14.646],
-                });
+            // 切换层级至第一层
+            const floor = app.query('.Building')[0].query('.Floor')[0];
+            app.level.change(floor);
 
-                // 机柜视角
-                cabinet.lookAt([-23.976, 3.05, -16.646]);
-
-                // 切换层级至第一层
-                const floor = app.query('.Building')[0].query('.Floor')[0];
-                app.level.change(floor);
-
-                // 创建线路
-                line = app.create({
-                    type: 'RouteLine',
-                    position: [-9, 0, -3],
-                    width: 1,
-                    style: {
-                        color: '#010',
-                    },
-                });
-
-                pathPoint = [
-                    [-5.319, 0.1, -5.294],
-                    [-5.319, 0.1, -18.395],
-                    [-23.976, 0.1, -18.395],
-                    [-23.976, 0.1, -16.646],
-                ];
-
-                pathPoint.forEach(point => {
-                    line.addPoint(point);
-                });
-
-                createLine();
+            // 创建线路
+            line = app.create({
+                type: 'RouteLine',
+                position: [-9, 0, -3],
+                width: 1,
+                style: {
+                    color: '#010',
+                },
             });
 
-            // 线路创建动画
-            function createLine() {
-                line.play({
-                    time: 3000,
-                    complete: function () {
-                        createPeople();
-                    },
-                });
-            }
+            pathPoint = [
+                [-5.319, 0.1, -5.294],
+                [-5.319, 0.1, -18.395],
+                [-23.976, 0.1, -18.395],
+                [-23.976, 0.1, -16.646],
+            ];
 
-            // 创建人物
-            function createPeople() {
-                people = app.create({
-                    type: 'Thing',
-                    id: '1234',
-                    url: 'https://www.thingjs.com/static/models/ani_gltf',
-                    position: [-5.319, 0.1, -5.294],
-                    complete: function () {
-                        camcraFly();
-                    },
-                });
-            }
+            pathPoint.forEach(point => {
+                line.addPoint(point);
+            });
 
-            // 移动
-            function camcraFly() {
-                app.camrea.flyTo({
-                    position: [-21.363, 20.01, -39.228],
-                    target: [-12.363, 3.01, -16.228],
-                    time: 3000,
-                    complete: function () {
-                        peopleAnimation();
-                    },
-                });
-            }
+            createLine();
+        });
 
-            // 人物动画
-            function peopleAnimation() {
-                people.peopleAnimation({
-                    name: '跑步',
-                    loopType: 'repeat',
-                    complete: function () {
-                        // 人物移动
-                        people.moPath({
-                            // 物体移动时沿向路径方向
-                            orientToPath: true,
-                            path: line.points,
-                            time: 3000,
-                            complete: function () {
-                                // 停止人物动画
-                                people.stopAnimation();
-                                // 打开保险箱
-                                cabinet.peopleAnimation('open1');
-                            },
-                        });
-                    },
-                });
-            }
+        // 线路创建动画
+        function createLine() {
+            line.play({
+                time: 3000,
+                complete: function () {
+                    createPeople();
+                },
+            });
+        }
 
-            // 人物前进
-            function peopleForward() {
-                app.camera.flyTo({
-                    position: [-21.363, 20.01, -39.228],
-                    target: [-12.363, 3.01, -16.228],
+        // 创建人物
+        function createPeople() {
+            people = app.create({
+                type: 'Thing',
+                id: '1234',
+                url: 'https://www.thingjs.com/static/models/ani_gltf',
+                position: [-5.319, 0.1, -5.294],
+                complete: function () {
+                    camcraFly();
+                },
+            });
+        }
 
-                    complete: function () {
-                        people.playAnimation({
-                            name: '跑步',
-                            LoopType: 'repeat',
-                            complete: function () {
-                                people.movePath({
-                                    path: line.points,
-                                    time: 2000,
-                                    complete: function () {
-                                        people.stopAnimation();
-                                        cabinet.playAnimation('open1');
-                                    },
-                                });
-                            },
-                        });
-                    },
-                });
-            }
+        // 移动
+        function camcraFly() {
+            app.camrea.flyTo({
+                position: [-21.363, 20.01, -39.228],
+                target: [-12.363, 3.01, -16.228],
+                time: 3000,
+                complete: function () {
+                    peopleAnimation();
+                },
+            });
+        }
 
-            // 人物返回
-            function peopleBack() {
-                app.camera.flyTo({
-                    complete: function () {
-                        cabinet.playAnimation('close1');
-                        const BackPath = pathPoint.reverse();
-                        people.playAnimation({
-                            name: '跑步',
-                            LoopType: 'repeat',
-                            complete: function () {
-                                people.movePath({
-                                    path: BackPath,
-                                    time: 2000,
-                                    complete: function () {
-                                        people.stopAnimation();
-                                        cabinet.playAnimation('close1');
-                                    },
-                                });
-                            },
-                        });
-                    },
-                });
-            }
-        </script>
-    </body>
+        // 人物动画
+        function peopleAnimation() {
+            people.peopleAnimation({
+                name: '跑步',
+                loopType: 'repeat',
+                complete: function () {
+                    // 人物移动
+                    people.moPath({
+                        // 物体移动时沿向路径方向
+                        orientToPath: true,
+                        path: line.points,
+                        time: 3000,
+                        complete: function () {
+                            // 停止人物动画
+                            people.stopAnimation();
+                            // 打开保险箱
+                            cabinet.peopleAnimation('open1');
+                        },
+                    });
+                },
+            });
+        }
+
+        // 人物前进
+        function peopleForward() {
+            app.camera.flyTo({
+                position: [-21.363, 20.01, -39.228],
+                target: [-12.363, 3.01, -16.228],
+
+                complete: function () {
+                    people.playAnimation({
+                        name: '跑步',
+                        LoopType: 'repeat',
+                        complete: function () {
+                            people.movePath({
+                                path: line.points,
+                                time: 2000,
+                                complete: function () {
+                                    people.stopAnimation();
+                                    cabinet.playAnimation('open1');
+                                },
+                            });
+                        },
+                    });
+                },
+            });
+        }
+
+        // 人物返回
+        function peopleBack() {
+            app.camera.flyTo({
+                complete: function () {
+                    cabinet.playAnimation('close1');
+                    const BackPath = pathPoint.reverse();
+                    people.playAnimation({
+                        name: '跑步',
+                        LoopType: 'repeat',
+                        complete: function () {
+                            people.movePath({
+                                path: BackPath,
+                                time: 2000,
+                                complete: function () {
+                                    people.stopAnimation();
+                                    cabinet.playAnimation('close1');
+                                },
+                            });
+                        },
+                    });
+                },
+            });
+        }
+    </script>
+</body>
+
 </html>
