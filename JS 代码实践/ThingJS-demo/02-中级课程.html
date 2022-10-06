@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>中级课程 demo</title>
-    <script src="./scource/thingjs.min-V1.2.7.7.js"></script>
+    <script src="./source/thingjs.min-V1.2.7.7.js"></script>
     <style>
         * {
             margin: 0;
@@ -66,6 +66,21 @@
                 name: 'cabinet',
                 position: [-24.976, 0.01, -14.646],
             });
+
+            const son = app.create({
+                type: 'Thing',
+                url: 'https://www.thingjs.com/static/models/cabinets/47f34ce2c5a14b6d8fd4e80974394a55',
+                id: '4321-1',
+                name: 'son',
+                parent: cabinet,
+                style: {
+                    alwaysOnTop: true
+                },
+            })
+
+            cabinet.add(son);
+            son.localPosition = [0, 1000, 0]
+
 
             // 机柜视角
             cabinet.lookAt([-23.976, 3.05, -16.646]);
