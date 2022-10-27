@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多背静渐变实现加减图标按钮效果实例</title>
+    <style>
+        .btn-add,
+        .btn-sub {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 1px solid gray;
+            background: linear-gradient(currentColor, currentColor) no-repeat center/.875em 2px, linear-gradient(currentColor, currentColor) no-repeat center/2px .875em ghostwhite;
+            color:  dimgray;
+        }
+
+        .btn-sub {
+            background-size: 0.875em 2px 0;
+        }
+    </style>
+  </head>
+  <body>
+    <button class="btn-add"></button>
+    <button class="btn-sub"></button>
+  </body>
+</html>

@@ -10,6 +10,16 @@
     - [数值或百分比值](#数值或百分比值)
     - [background-size 作为缩写](#background-size-作为缩写)
   - [background 属性值最成功的设计 -- 多背景](#background-属性值最成功的设计----多背景)
+  - [background-clip 属性与背景显式区域限制](#background-clip-属性与背景显式区域限制)
+  - [background-clip: text 声明与渐变文字效果](#background-clip-text-声明与渐变文字效果)
+  - [background-origin](#background-origin)
+  - [space 和 round 平铺模式](#space-和-round-平铺模式)
+    - [space](#space)
+    - [round](#round)
+  - [指定 background-position 的起始方位](#指定-background-position-的起始方位)
+    - [单值语法](#单值语法)
+    - [双值语法](#双值语法)
+    - [三值或四值语法](#三值或四值语法)
 
 ## 最实用的 background-size 属性
 
@@ -150,3 +160,138 @@ CSS 渐变本质上也是一种图像，可以作为 background-image 的属性�
 - background-size 属性也支持多背景，且可以任意控制尺寸
 
 借助上述特性，可以实现任意图形效果。
+
+但由于性能无法满足、实现的效果本质上还是位图，并不是矢量图，无法缩放自如，所以日常开发中不会使用拼接像素点的方法绘制图形。
+
+---
+
+## background-clip 属性与背景显式区域限制
+
+合法属性值：
+
+```css
+background-clip: border-box;
+background-clip: padding-box;
+background-clip: content-box;
+background-clip: text;
+```
+
+background-clip 属性最实用的应用场景之一就是控制背景颜色的显示范围。
+
+在实现具有深色背景的按钮时，可以借助透明边框和 backgound-clip 属性在保证点击区域足够的同时符合设计稿的要求。
+
+---
+
+## background-clip: text 声明与渐变文字效果
+
+background-clip：text 可以让**背景图像按照字符形状进行剪裁**，此时只需隐藏文字，就可以看到字符形状的背景效果。
+
+上述特性，常见于实现文字纹理效果和文字渐变效果。
+
+若使用 background-clip: text 实现渐变文字效果，那么原本彩色的 emoji 字符的颜色会丢失。
+
+---
+
+## background-origin
+
+合法属性值：
+
+```css
+background-origin: padding-box; /* 默认值 */
+background-origin: content-box;
+background-origin: border-box;
+```
+
+该属性设定了的背景图像定位的位置。
+
+---
+
+## space 和 round 平铺模式
+
+backgound-repeat 属性新增属性值 space、round
+
+### space
+
+让背景图像尽可能地重复，而不进行剪裁，每个重复单元的尺寸不会变化。
+
+其中第一张和最后一张图像固定在元素的两边，然后通过拉伸空白区域让剩余的图像均匀分布。
+
+```css
+.space {
+    background: url(1.jpg) center / auto 100%;
+    background-repeat: space;
+    outline: 1px dotted;
+}
+```
+
+**space 属性值主要用于平铺小尺寸图像**。
+
+若背景图像的尺寸比背景定位区域的尺寸还要大：
+
+原本无效的 background-position 属性此时生效，即北京显示区域只能显示一张图像的情况下，可以使用 background-position 属性来控制这张图像的定位。
+
+须注意浏览器差异
+
+### round
+
+背景图像会被拉伸，保证不留间隙。
+
+随着定位区域空间的增加，若剩余空间大于图像宽度的一半，则添加另外一张图像。在添加下一张图像时，当前的所有图像都会压缩以留出空间放下这个新添加的图像。
+
+space 和 round 亦可以改变 background-repeat 属性的语法，可以分别指定水平和垂直方向上的图像平铺方式。
+
+指定水平方向为 round 平铺，垂直方向为 space 平铺；
+
+```css
+background-repeat: round space;
+```
+
+---
+
+## 指定 background-position 的起始方位
+
+让背景图像在距离右下方 20px 的位置进行渲染：
+
+```css
+.example {
+    width: 300px;
+    height: 200px;
+    border: solid deepskyblue;
+    background: url(1.jpg) no-repeat right 20px bottom 20px;
+}
+```
+
+### 单值语法
+
+若 background-position 属性只有一个值，则无论是具体的数值、百分比值，还是关键字属性值，另外一个属性值一定是 center
+
+background-position 单值对应的双值语法表
+
+|单值|等同的双值|
+|:--|:--|
+|20px|20px center|
+|20%|20% center|
+|top|top center|
+|right|right center|
+|bottom|bottom center|
+|left|left center|
+|center|center center|
+
+### 双值语法
+
+分三种情况：
+
+1. 2 个值都是关键字属性值
+   1. left 和 right 关键字表示水平方向
+   2. top 和 bottom 关键字表示垂直方向
+   3. 不能同时设置对立的方向关键字，top bottom 非法
+   4. top right 和 right top 效果一样
+2. 1 个值是关键字属性值，另外一个值数值或百分比值
+   1. 此时第一个关键字属性值表示水平方向，第二个关键字属性值表示垂直方向
+   2. 20px left 非法
+3. 2 个值都是数值或百分比值
+   1. 第一个值表示水平方向，第二个值表示垂直方向
+
+### 三值或四值语法
+
+此时，数值或百分比值表示**偏移量**，第一个值一定要是关键字属性值，表示偏移从哪个方向开始。

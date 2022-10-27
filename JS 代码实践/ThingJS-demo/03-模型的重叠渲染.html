@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>模型的重叠渲染</title>
+    <script src="./source/thingjs.min-V1.2.7.7.js"></script>
+    <style></style>
+</head>
+
+<body>
+    <script>
+        /**
+ * 说明：点FeatureLayer的使用方法
+ * 功能：修改点图层的尺寸、图片、类型、形状、颜色等
+ * 备注：示例中所有整体修改的参数均可以在单个物体身上修改
+ * 操作：点击按钮
+ */
+ var app = new THING.App();
+ app.background = [0, 0, 0];  // 设置背景颜色
+ var pointLayer;
+ // 引用地图组件脚本
+ THING.Utils.dynamicLoad(['https://www.thingjs.com/uearth/uearth.min.js'], function () {
+         // 创建一个地图
+         var map = app.create({
+             type: 'Map',
+             attribution: '高德',
+             style: {
+                 night: false
+             }
+         });
+         // 创建一个瓦片图层
+         var tileLayer1 = app.create({
+             type: 'TileLayer',
+             name: '卫星影像图层',
+             url: 'https://webst0{1,2,3,4}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}'
+         });
+ 
+         map.addLayer(tileLayer1);  // 将瓦片图添加到底图图层中
+ 
+         // 摄像机飞到特定位置和角度
+         app.camera.earthFlyTo({
+             'time': 2000,
+             'lonlat': [116.4424, 39.9201],  // 经纬度
+             'height': 5000,
+             complete: function () {
+             }
+         });
+ 
+      
+         $.ajax({
+             type: 'GET',
+             url: 'https://www.thingjs.com/uearth/uGeo/sample_point.geojson',
+             dataType: 'json',
+             success: function (data) {
+                 // 创建 FeatureLayer 图层
+                 pointLayer = app.create({
+                     type: 'FeatureLayer',
+                     name: 'pointLayer',
+                     dataSource: data,  // 数据，目前只支持geojson
+                     geometryType: 'GeoPoint',  // 数据类型，目前支持 GeoPoint GeoLine GeoPolygon GeoHeatMap和GeoBuilding
+                     renderer: {
+                         type: 'image',  // image代表创建图片类型的点
+                         url: 'https://www.thingjs.com/static/image/train_station.png',  // 图片的url
+                         size: 5  // 尺寸
+                     },
+                     infoWindow: {
+                         displayMode: CMAP.DisplayMode.Always,  // 点击显示
+                         type: CMAP.InfoWindowType.Custom,  // 自定义InfoWindow
+                         customHtml: infoWindowHtml
+                     },
+                     complete: function(obj) {
+                        console.log(obj)
+                     }
+                 });
+                 map.addLayer(pointLayer);
+ 
+                 pointLayer.on('click', function (e) {
+                     // e.object可以获取到点击到的对象
+                     initThingJsTip(e.object.userData.NAME);
+                 });
+
+                 new THING.widget.Button('修改尺寸', function () {
+                     if ($('.point').css('display') == 'none') {
+                         if (pointLayer.renderer.size === 5) {
+                             pointLayer.renderer.size = 8;
+                         } else {
+                             pointLayer.renderer.size = 5;
+                         }
+                         // 通过FeatureLayer实例的objects属性可以获取到图层中的所有对象
+                         // pointLayer.objects[0]
+                     } else {
+                         initThingJsTip('波纹效果关闭后，才可以操作其它效果，点击按钮【波纹】');
+                     }
+                 });
+ 
+           
+ 
+          
+ 
+                
+ 
+               
+ 
+            
+ 
+              
+ 
+               
+ 
+              
+ 
+              
+ 
+             
+             }
+         });
+     });
+ 
+ // 创建提示
+    </script>
+</body>
+
+</html>

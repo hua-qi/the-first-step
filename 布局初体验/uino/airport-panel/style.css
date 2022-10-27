@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.airport-panel {
+    width: 598px;
+    background: #031D35;
+    opacity: 0.85;
+    /* 改 */
+    color: #B9E0F9; 
+    font-size: 24px;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    padding-top: 14px;
+}
+
+.header {
+    position: relative;
+    height: 87px;
+    background: url(./images/bg.png);
+    line-height: 75px;
+    font-size: 32px;
+    font-family: YouSheBiaoTiHei;
+    font-weight: 400;
+    color: #F7FCFF;
+    padding-left: 103px;
+}
+
+.header .close-btn {
+    position: absolute;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    background: url(./images/关闭.png);
+    top: 20px;
+    right: 38px;
+}
+
+.body {
+    padding: 0 23px;
+}
+
+.body .weather {
+    padding: 35px 23px;
+    border-bottom: 1px solid #427DA4;
+}
+
+.body .weather .profile {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.body .weather .profile .text .cur-temp {
+    font-size: 44px;
+    font-family: DINPro;
+    font-weight: 500;
+    vertical-align: text-bottom;
+}
+
+.body .weather .profile .text div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.body .weather .profile .text .separator {
+    margin: 0 20px;
+}
+
+.body .weather .profile .image {
+    width: 93px;
+    height: 93px;
+    background: url(./images/xuetian.png) no-repeat;
+    background-size: contain;
+}
+
+.body .weather .details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.body .weather .details div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 140px;
+}
+
+.body .weather .details div img {
+    width: 44px;
+    height: 44px;
+}
+/* 改 */
+.body .weather .details div span:nth-child(3) {
+    color: #fff;
+}
+
+.body .flight {
+    padding: 28px 19px;
+}
+
+.body .flight .profile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 35px;
+
+}
+
+.body .flight .profile div:nth-child(1) {
+    width: 74px;
+    height: 74px;
+    background: url(./images/组\ 1417.png);
+}
+
+.body .flight .profile div:nth-child(2) {
+    width: 435px;
+    height: 74px;
+    background: url(./images/组\ 1418.png);
+    text-align: center;
+    line-height: 74px;
+}
+
+.spare {
+    color: #6CC9F7;
+}
+
+.body .flight .details div {
+    margin-bottom: 23px;
+}
+
+.level {
+    color: #FF4B4B;
+}
+
+.probability {
+    color: #48E189;
+}
+
+.white {
+    color: #fff;
+}
