@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 1000px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .container .green {
+            height: 100px;
+            background-color: green;
+            border-radius: 50px;
+        }
+
+        .container .blue {
+            height: 100px;
+            background-color: blue;
+            border-radius: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 多背景实现方式 -->
+    <div class="container">
+        <div class="green" id="green"></div>
+        <div class="blue" id="blue"></div>
+    </div>
+
+    <script>
+        const data = [112, 88, 24];
+        let sum = 0;
+        const ratios = [];
+
+        data.forEach(item => {
+            sum += item;
+        })
+
+        data.forEach(item => {
+            ratios.push(Number((item / sum).toFixed(2)));
+        })
+
+        ratios[1] = ratios[0] + ratios[1];
+        const greenDom = document.getElementById('green');
+        const blueDom = document.getElementById('blue');
+
+        greenDom.style.width = `${1000 * ratios[1]}px`;
+        blueDom.style.width = `${1000 * ratios[0]}px`;
+
+    </script>
+</body>
+
+</html>
