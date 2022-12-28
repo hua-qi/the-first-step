@@ -1,0 +1,232 @@
+<!--
+ * @Description  : 
+ * @Author       : lianzimeng
+ * @Date         : 2022-12-26 10:47:45
+ * @LastEditors  : lianzimeng
+ * @LastEditTime : 2022-12-28 09:50:18
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>动态圆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .round-container {
+            position: fixed;
+            right: -125px;
+            width: 250px;
+            height: 250px;
+            border: 1px dashed black;
+            border-radius: 100%;
+            margin: 100px auto;
+            transform: rotate(calc(3.6deg * 7.5));
+            transition: all 1s ease;
+            cursor: grab;
+        }
+
+        .round {
+            width: 250px;
+            height: 250px;
+            border-radius: 100%;
+            position: absolute;
+        }
+
+        .child-round {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .active {
+            scale: 1.4;
+            background-color: red;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="round-container" class="round-container" data-deg="7.5"></div>
+
+    <script>
+        // 配置项
+        const config = {
+            menu: [1, 2, 3, 4, 5],  // 菜单项
+            initContainerDeg: 7.5,  // 初始化容器圆调整角度 * 3.6 下述角度同计算
+            containerEdge: 125,     // 容器圆边长
+            targetDeg: -20,         // 选中项目标角度
+            degIndex: 2,            // 选中项角度在角度菜单项列表中的索引
+        }
+
+        const containerEle = document.getElementById('round-container');
+        let roundEles;
+        let childRoundEles;
+
+        const { menu, initContainerDeg, containerEdge, targetDeg, degIndex } = config;
+
+        const splitNum = Math.floor(100 / (menu.length * 2)); // 间隔数
+        const degList = [];             // 角度列表
+        let curActiveDeg = targetDeg;   // 选中项所在角度
+        let curDegIndex = degIndex;
+
+        // 容器圆心坐标
+        const containerCenterX = containerEle.offsetLeft + containerEdge;
+        const containerCenterY = containerEle.offsetTop + containerEdge;
+
+        const init = () => {
+            // 创建子元素
+            createRoundChilren()
+
+            // 绑定样式
+            Array.from(roundEles).forEach((roundElement, index) => {
+                // 初始化样式
+                const deg = index * -splitNum;
+                degList.push(deg);
+                roundElement.setAttribute('data-deg', deg)
+                roundElement.style.transform = `rotate(calc(3.6deg * ${deg}))`;
+                roundElement.children[0].style.transform = `rotate(calc(3.6deg * ${-deg - initContainerDeg}))`;
+
+                // 子圆的点击事件
+                const childRoundEle = roundElement.children[0];
+                childRoundEle.onclick = childRoundClick;
+            })
+
+            addOrRemoveActiveStyle(curActiveDeg);
+
+        };
+
+        // 创建子元素
+        const createRoundChilren = () => {
+            const formatMenu = [...menu];
+            formatMenu.forEach((item, index) => {
+                const element = document.createElement('div');
+                element.classList.add('round');
+                element.innerHTML = `
+                    <div class="child-round">${item}</div>
+                `;
+                containerEle.appendChild(element);
+            });
+            roundEles = document.getElementsByClassName('round');
+            childRoundEles = document.getElementsByClassName('child-round');
+        }
+
+        // 获取两条直线间的角度
+        const getAngle = ({ x: x1, y: y1 }, { x: x2, y: y2 }) => {
+            const dot = x1 * x2 + y1 * y2
+            const det = x1 * y2 - y1 * x2
+            const angle = Math.atan2(det, dot) / Math.PI * 180
+            return (angle + 360) % 360
+        }
+
+        // 容器的拖拽事件
+        containerEle.onmousedown = function (event) {
+            const { clientX: startX, clientY: startY } = event;
+            addOrRemoveActiveStyle(curActiveDeg, 'remove');
+            containerEle.style.cursor = 'grabbing';
+
+            containerEle.onmousemove = function (event) {
+                const { clientX: endX, clientY: endY } = event;
+                const angle = getAngle(
+                    {
+                        x: startX - containerCenterX,
+                        y: startY - containerCenterY
+                    },
+                    {
+                        x: endX - containerCenterX,
+                        y: endY - containerCenterY
+                    }
+                );
+                console.log(angle);
+                const deg = Math.floor(angle / 3.6);
+                containerEle.style.transform = `rotate(calc(3.6deg * ${deg}))`;
+            }
+        }
+
+        containerEle.onmouseup = function (event) {
+            console.log(event);
+            containerEle.onmousemove = null;
+            containerEle.style.cursor = 'grab';
+        }
+
+        // 容器圆的滚轮事件
+        containerEle.onwheel = function (event) {
+            const curContainerDeg = containerEle.getAttribute('data-deg');
+            const { deltaY } = event;
+            addOrRemoveActiveStyle(curActiveDeg, 'remove');
+
+            if (deltaY > 0) {
+                curDegIndex = curDegIndex - 1 < 0 ? 9 : curDegIndex - 1;
+            } else {
+                curDegIndex = (curDegIndex + 1) % 9;
+            }
+
+            const activeDeg = degList[curDegIndex]
+            const rotateDeg = targetDeg - activeDeg + initContainerDeg;
+            afterInterStyle(rotateDeg, activeDeg);
+        };
+
+
+        // 子圆的点击事件
+        function childRoundClick(event) {
+            const activeRoundEle = event.target.parentNode;
+            const activeDeg = Number(activeRoundEle.getAttribute('data-deg'));
+
+            // 重复选中
+            if (curActiveDeg === activeDeg) return
+            addOrRemoveActiveStyle(curActiveDeg, 'remove');
+
+            let poorDeg = targetDeg - activeDeg;
+            const rotateDeg = poorDeg + initContainerDeg;
+
+            afterInterStyle(rotateDeg, activeDeg);
+        }
+
+        // 交互事件后的样式处理
+        const afterInterStyle = (rotateDeg, activeDeg) => {
+            containerEle.setAttribute('data-deg', rotateDeg);
+            containerEle.style.transform = `rotate(calc(3.6deg * ${rotateDeg}))`;
+            formatterChildRound()
+            addOrRemoveActiveStyle(activeDeg);
+            curActiveDeg = activeDeg;
+        }
+
+        // 子圆样式处理
+        const formatterChildRound = () => {
+            const containerDeg = containerEle.getAttribute('data-deg');
+            Array.from(childRoundEles).forEach(element => {
+                const deg = element.parentNode.getAttribute('data-deg');
+                element.style.transform = `rotate(calc(3.6deg * ${-deg - containerDeg}))`;
+            })
+        };
+
+        // 选中项样式处理
+        const addOrRemoveActiveStyle = (deg, removeFlag) => {
+            const activeRound = document.querySelector(`div[data-deg='${deg}']`);
+
+            if (removeFlag) {
+                activeRound.children[0].classList.remove('active');
+            } else {
+                activeRound.children[0].classList.add('active');
+            }
+        };
+
+        init();
+    </script>
+</body>
+
+</html>
