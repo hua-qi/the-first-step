@@ -29,4 +29,3 @@ outline-offset 属性用于改变 outline 属性设置的轮廓的偏移位置
   - cursor: grab
 - 五指收起
   - cursor: grabbing
-
