@@ -71,7 +71,7 @@ Function.prototype.call03 = function (context, ...arguments) {
 
   context.fn = this;
   // ... 解构运算符
-  let result = context.fn(...arguments);
+  const result = context.fn(...arguments);
   delete context.fn;
 
   return result;

@@ -38,7 +38,7 @@ container.onmousemove = throttle_04(getUserAction, 1000, { trailing: false });
 function throttle_01(func, wait) {
   let previous = 0;
 
-  return function () {
+  const throttled = function () {
     const now = new Date();
 
     if (now - previous > wait) {
@@ -46,6 +46,12 @@ function throttle_01(func, wait) {
       previous = now;
     }
   };
+
+  throttled.cancel = function() {
+    previous = 0;
+  }
+
+  return throttled;
 }
 
 // version 02
@@ -56,7 +62,7 @@ function throttle_01(func, wait) {
 function throttle_02(func, wait) {
   let timeout;
 
-  return function () {
+  const throttled =  function () {
     const context = this,
       args = arguments;
 
@@ -67,6 +73,13 @@ function throttle_02(func, wait) {
       }, wait);
     }
   };
+
+  throttled.cancel = function() {
+    clearTimeout(timeout);
+    timeout = null;
+  }
+
+  return throttled;
 }
 
 // version 03
@@ -119,14 +132,17 @@ function throttle_03(func, wait) {
 // version 04
 /* 
 优化
-通过设置 options 作为第三个参数，判断 无头有尾 或 有头无尾的请跨
+通过设置 options 作为第三个参数，判断 无头有尾 或 有头无尾的情况
 
 leading： false 表示禁用立即执行
 trailing：false 表示禁用停止触发后的执行
  */
 
 function throttle_04(func, wait, options) {
-  if (!options) options = {};
+  if (!options) options = {
+    leading: false,
+    trailing: false
+  };
 
   let timeout,
     context,
@@ -135,17 +151,17 @@ function throttle_04(func, wait, options) {
     previous = 0;
 
   const later = function () {
-    previous = options.leading === false ? 0 : new Date().getTime();
+    previous = options.leading ? new Date().getTime() : 0;
     timeout = null;
     func.apply(context, args);
-    if (!timeout) context = args = null;
+    context = args = null;
   };
 
   const throttled = function () {
     const now = new Date().getTime();
 
     // 取消立即执行
-    if (!previous && options.leading === false) previous = now;
+    if (!previous && !options.leading) previous = now;
 
     const remaining = wait - (now - previous);
     context = this;

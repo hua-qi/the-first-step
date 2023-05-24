@@ -178,25 +178,26 @@ function debounce(func, wait, immediate) {
 
 // 笔者认为的立即执行
 function debounce_06(func, wait, immediate) {
-  let timer,
-    isFirst = immediate;
+  let timer;
 
   const debounced = function () {
     const context = this,
       args = arguments;
 
-    if (isFirst) {
-      isFirst = false;
+    if (immediate) {
+      immediate = false;
       func.apply(context, args);
     } else {
       if (timer) clearTimeout(timer);
       timer = setTimeout(function () {
         func.apply(context, args);
-      }, wait);
+      }, wait)
+      ;
     }
   };
 
   debounced.cancel = function () {
+    clearTimeout(timer);
     timer = null;
   };
 

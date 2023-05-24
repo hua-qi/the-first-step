@@ -109,7 +109,7 @@ function unique_05(array, isSorted, iterate) {
 
   for (let index = 0, len = array.length; index < len; index++) {
     const current = array[index],
-      computed = iterate ? iterate(current, index, array) : current;
+      computed = iterate ? iterate(current) : current;
 
     if (isSorted) {
       if (!index || seen !== computed) {
@@ -128,7 +128,7 @@ function unique_05(array, isSorted, iterate) {
   return res;
 }
 
-const iterate = (item, index, array) => {
+const iterate = (item) => {
   return typeof item === "string" ? item.toLocaleLowerCase() : item;
 };
 

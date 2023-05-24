@@ -7,7 +7,6 @@ Function.prototype.apply01 = function (context, arr) {
   // context 未传值
   context = Object(context) || globalThis;
   context.fn = this;
-  console.log(context);
 
   let res = null;
 
