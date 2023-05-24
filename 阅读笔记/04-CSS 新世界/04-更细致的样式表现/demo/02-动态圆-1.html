@@ -1,0 +1,162 @@
+<!--
+ * @Description  : 
+ * @Author       : lianzimeng
+ * @Date         : 2022-12-26 10:47:45
+ * @LastEditors  : lianzimeng
+ * @LastEditTime : 2022-12-26 16:10:17
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>动态圆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 方便计算 */
+        .round-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 200px auto;
+            transform: rotate(calc(3.6deg * -30));
+        }
+
+        .round {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 250px;
+            border-radius: 100%;
+            border: 1px solid black;
+            transition: all 1s ease;
+        }
+
+        .round .child-round {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background-color: blue;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            color: white;
+        }
+
+        /* 大圆公转 */
+        .round:nth-child(1) {
+            transform: rotate(calc(3.6deg));
+        }
+
+        .round:nth-child(2) {
+            transform: rotate(calc(3.6deg * 10));
+        }
+
+        .round:nth-child(3) {
+            transform: rotate(calc(3.6deg * 20));
+        }
+
+        .round:nth-child(4) {
+            transform: rotate(calc(3.6deg * 30));
+        }
+
+        .round:nth-child(5) {
+            transform: rotate(calc(3.6deg * 40));
+        }
+
+        /* 小圆自转 */
+        .round:nth-child(1) .child-round {
+            transform: rotate(calc(3.6deg * 30));
+        }
+
+        .round:nth-child(2) .child-round {
+            transform: rotate(calc(3.6deg * (30 - 10)));
+        }
+
+        .round:nth-child(3) .child-round {
+            transform: rotate(calc(3.6deg * (30 - 20)));
+        }
+
+        .round:nth-child(4) .child-round {
+            transform: rotate(calc(3.6deg * (30 - 30)));
+        }
+
+        .round:nth-child(5) .child-round {
+            transform: rotate(calc(3.6deg * (30 - 40)));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="round-container">
+        <div class="round" data-deg="0">
+            <div class="child-round" data-deg="0">1</div>
+        </div>
+        <div class="round" data-deg="10">
+            <div class="child-round" data-deg="-10">2</div>
+        </div>
+        <div class="round" data-deg="20">
+            <div class="child-round" data-deg="-20">3</div>
+        </div>
+        <div class="round" data-deg="30">
+            <div class="child-round" data-deg="-30">4</div>
+        </div>
+        <div class="round" data-deg="40">
+            <div class="child-round" data-deg="-40">5</div>
+        </div>
+    </div>
+
+
+    <script>
+        const childRoundEles = document.getElementsByClassName('child-round');
+        const degList = [0, 10, 20, 30, 40];
+
+        Array.from(childRoundEles).forEach(childItem => {
+            childItem.addEventListener('click', function (ev) {
+                const roundEle = ev.path[1];
+                const deg = Number(roundEle.getAttribute('data-deg'));
+                let rotateDirection = 0; // 0 为逆时针，1 为顺时针
+
+                if (deg === 20) return;
+                if (deg < 20) rotateDirection = 1; // 确认旋转方向
+
+                const poor = 20 - deg;
+                const roundItemList = []
+
+                // 由角度列表获取对应的元素
+                degList.forEach(num => {
+                    const roundItem = document.querySelector(`div[data-deg='${num}']`);
+                    roundItemList.push(roundItem)
+                })
+
+                // 五个圆的旋转角度计算
+                roundItemList.forEach(roundItem => {
+                    const curDeg = Number(roundItem.getAttribute('data-deg'));
+                    let newDeg;
+                    if (rotateDirection) {
+                        newDeg = (curDeg + poor) % 50;
+                    } else {
+                        newDeg = curDeg + poor >= 0 ? curDeg + poor : curDeg + poor + 50;
+                    }
+
+                    // 设置元素属性
+                    roundItem.setAttribute('data-deg', newDeg);
+                    roundItem.children[0].setAttribute('data-deg', -newDeg)
+                    roundItem.style.transform = `rotate(calc(3.6deg * ${newDeg}))`
+                    roundItem.children[0].style.transform = `rotate(calc(3.6deg * (30 - ${newDeg})))`
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
