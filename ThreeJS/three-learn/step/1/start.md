@@ -17,11 +17,16 @@
 
 three.js 五个核心
 
-- scene -- 场景
-  - object
-  - light
-- camera
-- renderer
+- **scene** -- 场景
+  - **object**
+    - point
+    - line
+    - mesh
+  - **light**
+    - material - 灯光与物体材质共同对最终呈现效果产生影响
+    - geometry
+- **camera**
+- **renderer**
 
 ## 七
 
